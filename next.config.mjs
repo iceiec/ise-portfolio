@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',        // enables static export
-  trailingSlash: true,     // ensures correct routing
+  output: 'export',
+  trailingSlash: true,       // ensures proper routing
   typescript: { ignoreBuildErrors: true },
-  images: { unoptimized: true }
+  images: { unoptimized: true },
+  // remove basePath and assetPrefix
 };
-
 export default nextConfig;
