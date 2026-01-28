@@ -9,8 +9,9 @@ import { ArrowRight, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showOverlay, setShowOverlay] = useState(false); 
-  
+  const [showOverlay, setShowOverlay] = useState<string | false>(false);
+
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
@@ -184,7 +185,7 @@ export default function Portfolio() {
 
     {/* Subtle info below image */}
     <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 text-center z-20">
-      <p className="text-white/90 font-semibold text-lg"></p>
+      <br></br>
       <p className="text-white/60 text-sm mt-1">Full-Stack Developer</p>
     </div>
 
@@ -350,141 +351,183 @@ export default function Portfolio() {
 
         {/* Projects Section - Bento Layout */}
         <section id="projects" className="py-20 px-4 md:px-8">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-5xl md:text-6xl font-bold mb-16">
-              Featured <span className="gradient-text">Projects</span>
-            </h2>
-            
-            
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Project 1 - Tomb Navigation & Contract Management */}
-<div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-primary/50 transition group animate-fade-in relative">
-  
-  {/* Project Image / Background */}
-  <div className="h-64 bg-gradient-to-br from-primary/20 via-purple-500/10 to-secondary/20 flex items-center justify-center relative overflow-hidden">
-    <div className="text-7xl">🏛️</div>
-    <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-50"></div>
-  </div>
+  <div className="max-w-5xl mx-auto">
+    <h2 className="text-5xl md:text-6xl font-bold mb-16">
+      Featured <span className="gradient-text">Projects</span>
+    </h2>
 
-  {/* Project Info */}
-  <div className="p-8">
-    <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition">
-      Tomb Navigation & Contract Management
-    </h3>
-    <p className="text-muted-foreground mb-6">
-      Advanced Flutter mobile app combining cemetery navigation with intelligent contract management. Features AI-powered chatbot, PDF export capabilities, and immersive 360° interactive maps.
-    </p>
+    <div className="grid md:grid-cols-2 gap-8">
+      {/* Project 1 - Tomb Navigation & Contract Management */}
+      <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-primary/50 transition group animate-fade-in relative">
+        <div className="h-64 bg-gradient-to-br from-primary/20 via-purple-500/10 to-secondary/20 flex items-center justify-center relative overflow-hidden">
+          <div className="text-7xl">🏛️</div>
+          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-50"></div>
+        </div>
 
-    <div className="flex flex-wrap gap-2 mb-6">
-      {['Flutter', 'Firebase', 'AI Integration', 'Maps API'].map((tech) => (
-        <span
-          key={tech}
-          className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full"
-        >
-          {tech}
-        </span>
-      ))}
-    </div>
+        <div className="p-8">
+          <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition">
+            Tomb Navigation & Contract Management
+          </h3>
+          <p className="text-muted-foreground mb-6">
+            Advanced Flutter mobile app combining cemetery navigation with intelligent contract management. Features AI-powered chatbot, PDF export capabilities, and immersive 360° interactive maps.
+          </p>
 
-    {/* View Project Button */}
-    <button
-      className="text-primary hover:text-secondary transition flex items-center gap-2 group"
-      onClick={() => setShowOverlay(true)}
-    >
-      View Project
-      <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
-    </button>
-  </div>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {['Flutter', 'Firebase', 'AI Integration', 'Maps API'].map((tech) => (
+              <span key={tech} className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full">
+                {tech}
+              </span>
+            ))}
+          </div>
 
-  {/* Overlay */}
-  {showOverlay && (
-    <div
-      className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center text-white p-6 rounded-xl z-20 cursor-pointer"
-      onClick={() => setShowOverlay(false)}
-    >
-      <div className="text-center max-w-xs">
-        <h3 className="text-2xl font-bold mb-3">
-          Tomb Navigation & Contract Management
-        </h3>
-        <p className="mb-4">
-          Click anywhere to close. This overlay can contain more details, screenshots, or links to GitHub/Live demo.
-        </p>
-        <button
-          onClick={() => setShowOverlay(false)}
-          className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/80 transition"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  )}
+          <button
+            className="text-primary hover:text-secondary transition flex items-center gap-2 group"
+            onClick={() => setShowOverlay('project1')}
+          >
+            View Project
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
+          </button>
+        </div>
 
-</div>
-
-
-              {/* Project 2 */}
-              <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-secondary/50 transition group animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <div className="h-64 bg-gradient-to-br from-secondary/20 via-cyan-500/10 to-accent/20 flex items-center justify-center relative overflow-hidden">
-                  <div className="text-7xl">🏖️</div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-50"></div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold mb-3 group-hover:text-secondary transition">
-                    Balai Alegria E-Commerce
-                  </h3>
-                  <p className="text-muted-foreground mb-6">
-                    Full-featured resort booking platform with integrated payment processing. Seamless user experience with secure transactions via PayMongo API.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {['HTML/CSS', 'JavaScript', 'PayMongo API'].map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-xs bg-secondary/10 text-secondary px-3 py-1 rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <button className="text-secondary hover:text-accent transition flex items-center gap-2 group">
-                    View Project
-                    <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Project 3 */}
-              <div className="md:col-span-2 glass-effect rounded-xl overflow-hidden hover:border-accent/50 transition group animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <div className="grid md:grid-cols-3">
-                  <div className="h-64 md:h-auto bg-gradient-to-br from-accent/20 via-green-500/10 to-primary/20 flex items-center justify-center col-span-1">
-                    <div className="text-7xl">🚗</div>
-                  </div>
-                  <div className="col-span-2 p-8 flex flex-col justify-center">
-                    <h3 className="text-2xl font-bold mb-3 group-hover:text-accent transition">
-                      FD AutoHub Ordering System
-                    </h3>
-                    <p className="text-muted-foreground mb-6">
-                      Comprehensive inventory and ordering system for automobile parts. Features include real-time stock tracking, order management, and staff efficiency dashboard.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {['PHP', 'MySQL', 'Bootstrap', 'Dashboard'].map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-xs bg-accent/10 text-accent px-3 py-1 rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    <button className="text-accent hover:text-primary transition flex items-center gap-2 group w-fit">
-                      View Project
-                      <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+        {/* Overlay */}
+        {showOverlay === 'project1' && (
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center text-white p-6 rounded-xl z-20 cursor-pointer"
+            onClick={() => setShowOverlay(false)}
+          >
+            <div className="text-center max-w-xs">
+              <h3 className="text-2xl font-bold mb-3">
+                Tomb Navigation & Contract Management
+              </h3>
+              <p className="mb-4">
+                Click anywhere to close. This overlay can contain more details, screenshots, or links to GitHub/Live demo.
+              </p>
+              <button
+                onClick={() => setShowOverlay(false)}
+                className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/80 transition"
+              >
+                Close
+              </button>
             </div>
           </div>
-        </section>
+        )}
+      </div>
+
+      {/* Project 2 - Balai Alegria E-Commerce */}
+      <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-secondary/50 transition group animate-fade-in" style={{ animationDelay: '0.1s' }}>
+        <div className="h-64 bg-gradient-to-br from-secondary/20 via-cyan-500/10 to-accent/20 flex items-center justify-center relative overflow-hidden">
+          <div className="text-7xl">🏖️</div>
+          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-50"></div>
+        </div>
+
+        <div className="p-8">
+          <h3 className="text-2xl font-bold mb-3 group-hover:text-secondary transition">
+            Balai Alegria E-Commerce
+          </h3>
+          <p className="text-muted-foreground mb-6">
+            Full-featured resort booking platform with integrated payment processing. Seamless user experience with secure transactions via PayMongo API.
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-6">
+            {['HTML/CSS', 'JavaScript', 'PayMongo API'].map((tech) => (
+              <span key={tech} className="text-xs bg-secondary/10 text-secondary px-3 py-1 rounded-full">
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <button
+            className="text-secondary hover:text-accent transition flex items-center gap-2 group"
+            onClick={() => setShowOverlay('project2')}
+          >
+            View Project
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
+          </button>
+        </div>
+
+        {/* Overlay */}
+        {showOverlay === 'project2' && (
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center text-white p-6 rounded-xl z-20 cursor-pointer"
+            onClick={() => setShowOverlay(false)}
+          >
+            <div className="text-center max-w-xs">
+              <h3 className="text-2xl font-bold mb-3">
+                Balai Alegria E-Commerce
+              </h3>
+              <p className="mb-4">
+                Click anywhere to close. This overlay can contain screenshots, features, or links to GitHub/Live demo.
+              </p>
+              <button
+                onClick={() => setShowOverlay(false)}
+                className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/80 transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Project 3 - FD AutoHub Ordering System */}
+      <div className="md:col-span-2 glass-effect rounded-xl overflow-hidden hover:border-accent/50 transition group animate-fade-in" style={{ animationDelay: '0.2s' }}>
+        <div className="grid md:grid-cols-3">
+          <div className="h-64 md:h-auto bg-gradient-to-br from-accent/20 via-green-500/10 to-primary/20 flex items-center justify-center col-span-1">
+            <div className="text-7xl">🚗</div>
+          </div>
+          <div className="col-span-2 p-8 flex flex-col justify-center">
+            <h3 className="text-2xl font-bold mb-3 group-hover:text-accent transition">
+              FD AutoHub Ordering System
+            </h3>
+            <p className="text-muted-foreground mb-6">
+              Comprehensive inventory and ordering system for automobile parts. Features include real-time stock tracking, order management, and staff efficiency dashboard.
+            </p>
+
+            <div className="flex flex-wrap gap-2 mb-6">
+              {['PHP', 'MySQL', 'Bootstrap', 'Dashboard'].map((tech) => (
+                <span key={tech} className="text-xs bg-accent/10 text-accent px-3 py-1 rounded-full">
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <button
+              className="text-accent hover:text-primary transition flex items-center gap-2 group w-fit"
+              onClick={() => setShowOverlay('project3')}
+            >
+              View Project
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
+            </button>
+          </div>
+        </div>
+
+        {/* Overlay */}
+        {showOverlay === 'project3' && (
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center text-white p-6 rounded-xl z-20 cursor-pointer"
+            onClick={() => setShowOverlay(false)}
+          >
+            <div className="text-center max-w-xs">
+              <h3 className="text-2xl font-bold mb-3">
+                FD AutoHub Ordering System
+              </h3>
+              <p className="mb-4">
+                Click anywhere to close. This overlay can contain screenshots, features, or links to GitHub/Live demo.
+              </p>
+              <button
+                onClick={() => setShowOverlay(false)}
+                className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/80 transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
 
         {/* Contact Section */}
         <section id="contact" className="py-20 px-4 md:px-8">
