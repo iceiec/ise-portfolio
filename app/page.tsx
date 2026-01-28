@@ -416,7 +416,7 @@ export default function Portfolio() {
         </button>
       </div>
     </div>
-  )};
+  )}
 
 </div>
 
@@ -574,4 +574,4 @@ export default function Portfolio() {
       </main>
     </div>
   );
-};  };
+}
