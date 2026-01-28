@@ -38,6 +38,8 @@ export default function Portfolio() {
   };
 
   const navItems = ['home', 'about', 'experience', 'skills', 'projects', 'contact'];
+  const ProjectCard = () => {
+  const [showOverlay, setShowOverlay] = useState(false);
 
   return (
     <div className="dark min-h-screen bg-background text-foreground">
@@ -181,7 +183,7 @@ export default function Portfolio() {
 
     {/* Subtle info below image */}
     <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 text-center z-20">
-      <p className="text-white/90 font-semibold text-lg">Felizardo Aguinaldo</p>
+      <p className="text-white/90 font-semibold text-lg"></p>
       <p className="text-white/60 text-sm mt-1">Full-Stack Developer</p>
     </div>
 
@@ -351,37 +353,73 @@ export default function Portfolio() {
             <h2 className="text-5xl md:text-6xl font-bold mb-16">
               Featured <span className="gradient-text">Projects</span>
             </h2>
-
+            
+            
             <div className="grid md:grid-cols-2 gap-8">
-              {/* Project 1 - Large Featured */}
-              <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-primary/50 transition group animate-fade-in">
-                <div className="h-64 bg-gradient-to-br from-primary/20 via-purple-500/10 to-secondary/20 flex items-center justify-center relative overflow-hidden">
-                  <div className="text-7xl">🏛️</div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-50"></div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition">
-                    Tomb Navigation & Contract Management
-                  </h3>
-                  <p className="text-muted-foreground mb-6">
-                    Advanced Flutter mobile app combining cemetery navigation with intelligent contract management. Features AI-powered chatbot, PDF export capabilities, and immersive 360° interactive maps.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {['Flutter', 'Firebase', 'AI Integration', 'Maps API'].map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <button className="text-primary hover:text-secondary transition flex items-center gap-2 group">
-                    View Project
-                    <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
-                  </button>
-                </div>
-              </div>
+              {/* Project 1 - Tomb Navigation & Contract Management */}
+<div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-primary/50 transition group animate-fade-in relative">
+  
+  {/* Project Image / Background */}
+  <div className="h-64 bg-gradient-to-br from-primary/20 via-purple-500/10 to-secondary/20 flex items-center justify-center relative overflow-hidden">
+    <div className="text-7xl">🏛️</div>
+    <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-50"></div>
+  </div>
+
+  {/* Project Info */}
+  <div className="p-8">
+    <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition">
+      Tomb Navigation & Contract Management
+    </h3>
+    <p className="text-muted-foreground mb-6">
+      Advanced Flutter mobile app combining cemetery navigation with intelligent contract management. Features AI-powered chatbot, PDF export capabilities, and immersive 360° interactive maps.
+    </p>
+
+    <div className="flex flex-wrap gap-2 mb-6">
+      {['Flutter', 'Firebase', 'AI Integration', 'Maps API'].map((tech) => (
+        <span
+          key={tech}
+          className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full"
+        >
+          {tech}
+        </span>
+      ))}
+    </div>
+
+    {/* View Project Button */}
+    <button
+      className="text-primary hover:text-secondary transition flex items-center gap-2 group"
+      onClick={() => setShowOverlay(true)}
+    >
+      View Project
+      <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
+    </button>
+  </div>
+
+  {/* Overlay */}
+  {showOverlay && (
+    <div
+      className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center text-white p-6 rounded-xl z-20 cursor-pointer"
+      onClick={() => setShowOverlay(false)}
+    >
+      <div className="text-center max-w-xs">
+        <h3 className="text-2xl font-bold mb-3">
+          Tomb Navigation & Contract Management
+        </h3>
+        <p className="mb-4">
+          Click anywhere to close. This overlay can contain more details, screenshots, or links to GitHub/Live demo.
+        </p>
+        <button
+          onClick={() => setShowOverlay(false)}
+          className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/80 transition"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  )};
+
+</div>
+
 
               {/* Project 2 */}
               <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-secondary/50 transition group animate-fade-in" style={{ animationDelay: '0.1s' }}>
@@ -536,4 +574,4 @@ export default function Portfolio() {
       </main>
     </div>
   );
-}
+};  };
