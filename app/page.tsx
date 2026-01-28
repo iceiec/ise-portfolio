@@ -167,17 +167,16 @@ export default function Portfolio() {
               {/* Right Visual - Smaller with depth */}
               <div className="lg:col-span-2 animate-slide-in-right">
                 <div className="relative">
-                  <div className="glass-effect rounded-2xl p-12 flex items-center justify-center min-h-[500px] relative z-10">
+                  <div className="w-80 h-80 rounded-full overflow-hidden shadow-xl border border-white/10">
                     <div className="text-center">
                        <Image
-        src="/profile.png"
-        alt="Profile"
-        width={350}
-        height={350}
-        className="rounded-2xl object-cover shadow-xl"
-        priority
-      />
-                      <p className="text-muted-foreground">Profile Image</p>
+    src="/profile.png"
+    alt="Profile"
+    fill
+    className="object-cover"
+    priority
+  />
+                      <p className="text-muted-foreground"></p>
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl translate-x-6 translate-y-6"></div>
