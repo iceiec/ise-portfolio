@@ -165,25 +165,33 @@ export default function Portfolio() {
               </div>
 
               {/* Right Visual - Smaller with depth */}
-              <div className="lg:col-span-2 animate-slide-in-right">
-                <div className="relative">
-                  <div className="w-80 h-80 rounded-full overflow-hidden shadow-xl border border-white/10">
-                    <div className="text-center">
-                       <Image
-    src="/profile.png"
-    alt="Profile"
-    fill
-    className="object-cover"
-    priority
-  />
-                      <p className="text-muted-foreground"></p>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl translate-x-6 translate-y-6"></div>
-                </div>
-              </div>
+             <div className="lg:col-span-2 animate-slide-in-right flex justify-center">
+  <div className="relative w-80 h-80">
+    
+    {/* Circular Profile Image */}
+    <div className="w-80 h-80 rounded-full overflow-hidden shadow-2xl border border-white/20 relative z-10">
+      <Image
+        src="/profile.png"
+        alt="Profile"
+        fill
+        className="object-cover"
+        priority
+      />
+    </div>
+
+    {/* Subtle info below image */}
+    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 text-center z-20">
+      <p className="text-white/90 font-semibold text-lg">Felizardo Aguinaldo</p>
+      <p className="text-white/60 text-sm mt-1">Full-Stack Developer</p>
+    </div>
+
+    {/* Background gradient / glass effect */}
+    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl translate-x-4 translate-y-4 blur-xl z-0"></div>
+
+  </div>
+</div>
             </div>
-          </div>
+          </div>  
         </section>
           
 
