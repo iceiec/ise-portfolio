@@ -1,5 +1,6 @@
 'use client';
 
+import Image from "next/image";
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
@@ -149,7 +150,7 @@ export default function Portfolio() {
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border">
                   <div>
-                    <div className="text-3xl font-bold gradient-text">Testingngg+</div>
+                    <div className="text-3xl font-bold gradient-text">5+</div>
                     <p className="text-sm text-muted-foreground mt-1">Projects Done</p>
                   </div>
                   <div>
@@ -168,7 +169,14 @@ export default function Portfolio() {
                 <div className="relative">
                   <div className="glass-effect rounded-2xl p-12 flex items-center justify-center min-h-[500px] relative z-10">
                     <div className="text-center">
-                      <div className="text-8xl mb-4 animate-bounce">💻</div>
+                       <Image
+        src="/profile.png"
+        alt="Profile"
+        width={350}
+        height={350}
+        className="rounded-2xl object-cover shadow-xl"
+        priority
+      />
                       <p className="text-muted-foreground">Profile Image</p>
                     </div>
                   </div>
