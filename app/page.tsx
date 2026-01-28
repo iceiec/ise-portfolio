@@ -477,10 +477,11 @@ export default function Portfolio() {
           </div>
           <div className="col-span-2 p-8 flex flex-col justify-center">
             <h3 className="text-2xl font-bold mb-3 group-hover:text-accent transition">
-              FD AutoHub Ordering System
+              FJA Basketball Scheduling Web Application
             </h3>
             <p className="text-muted-foreground mb-6">
-              Comprehensive inventory and ordering system for automobile parts. Features include real-time stock tracking, order management, and staff efficiency dashboard.
+              Designed and developed a PHP and CSS-based scheduling and management platform tailored for FJA Basketball. The system streamlined operations by providing administrators and clients with automated PDF report generation and monthly 
+              performance and scheduling reports, reducing manual workload and improving overall efficiency
             </p>
 
             <div className="flex flex-wrap gap-2 mb-6">
