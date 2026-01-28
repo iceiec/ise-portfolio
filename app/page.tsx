@@ -5,10 +5,12 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
 
+
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const [showOverlay, setShowOverlay] = useState(false); 
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
@@ -38,8 +40,7 @@ export default function Portfolio() {
   };
 
   const navItems = ['home', 'about', 'experience', 'skills', 'projects', 'contact'];
-  const ProjectCard = () => {
-  const [showOverlay, setShowOverlay] = useState(false);
+  
 
   return (
     <div className="dark min-h-screen bg-background text-foreground">
