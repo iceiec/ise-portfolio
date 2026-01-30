@@ -168,11 +168,13 @@ export default function Portfolio() {
   href="/PierreIsaiahAguinaldo_Resume.pdf"
   target="_blank"
   rel="noopener noreferrer"
-  className="p-2 border border-primary text-primary rounded-md hover:bg-primary/10 transition"
   aria-label="Download Resume"
+  className="px-4 py-2 border border-primary text-primary rounded-md hover:bg-primary/10 transition inline-flex items-center justify-center gap-2"
 >
-  📄 Resume
+  📄
+  <span>Resume</span>
 </a>
+
 
 </div>
                 </div>
