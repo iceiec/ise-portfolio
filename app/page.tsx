@@ -443,10 +443,18 @@ export default function Portfolio() {
 
       {/* Project 2 - Balai Alegria E-Commerce */}
       <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-secondary/50 transition group animate-fade-in" style={{ animationDelay: '0.1s' }}>
-        <div className="h-64 bg-gradient-to-br from-secondary/20 via-cyan-500/10 to-accent/20 flex items-center justify-center relative overflow-hidden">
-          <div className="text-7xl">🏖️</div>
-          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-50"></div>
-        </div>
+  <div className="h-64 relative overflow-hidden">
+    
+    <img
+      src="/balai.png"
+      alt="Balai Project"
+      className="w-full h-full object-cover group-hover:scale-105 transition"
+    />
+
+    {/* Gradient overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
+
+  </div>
 
         <div className="p-8">
           <h3 className="text-2xl font-bold mb-3 group-hover:text-secondary transition">
