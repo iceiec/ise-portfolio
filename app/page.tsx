@@ -149,30 +149,29 @@ export default function Portfolio() {
                 <div className="flex flex-col sm:flex-row gap-4 mb-12">
                  <div className="flex flex-col sm:flex-row gap-4 mb-12">
   <button
-    onClick={() => scrollToSection('projects')}
-    className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition flex items-center gap-2 group w-fit"
-  >
-    View My Work
-    <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
-  </button>
+  onClick={() => scrollToSection('projects')}
+  className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition flex items-center justify-center gap-2 group w-full sm:w-[220px]"
+>
+  View My Work
+  <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
+</button>
 
-  <a
-    href="/PierreIsaiahAguinaldo_Resume.pdf"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="px-8 py-4 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition w-fit"
-  >
-    Download Resume
-  </a>
+<a
+  href="/PierreIsaiahAguinaldo_Resume.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-8 py-4 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition flex items-center justify-center w-full sm:w-[220px]"
+>
+  Download Resume
+</a>
+
+<button
+  onClick={() => scrollToSection('contact')}
+  className="px-8 py-4 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition flex items-center justify-center w-full sm:w-[220px]"
+>
+  Get in Touch
+</button>
 </div>
-
-                  <button
-                    onClick={() => scrollToSection('contact')}
-                    className="px-8 py-4 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition w-fit"
-                  >
-                    Get in Touch
-                  </button>
-                  
                 </div>
 
                 {/* Stats */}
