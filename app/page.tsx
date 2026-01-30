@@ -41,6 +41,17 @@ export default function Portfolio() {
   };
 
   const navItems = ['home', 'about', 'experience', 'skills', 'projects', 'contact'];
+  const project1Images = [
+  "/mob1.png",
+  "/mob2.png",
+  "/mob3.png",
+  "/mob4.png",
+  "/mob5.png",
+  "/mob6.png",
+  "/mob7.png",
+  "/mob8.png",
+];
+
   
 
   return (
@@ -391,26 +402,37 @@ export default function Portfolio() {
 
         {/* Overlay */}
         {showOverlay === 'project1' && (
-          <div
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center text-white p-6 rounded-xl z-20 cursor-pointer"
-            onClick={() => setShowOverlay(false)}
-          >
-            <div className="text-center max-w-xs">
-              <h3 className="text-2xl font-bold mb-3">
-                Tomb Navigation & Contract Management
-              </h3>
-              <p className="mb-4">
-                Click anywhere to close. This overlay can contain more details, screenshots, or links to GitHub/Live demo.
-              </p>
-              <button
-                onClick={() => setShowOverlay(false)}
-                className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/80 transition"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
+  <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    
+    <div className="bg-neutral-900 rounded-xl max-w-5xl w-full p-6 relative overflow-y-auto max-h-[90vh]">
+      
+      {/* Close */}
+      <button
+        onClick={() => setShowOverlay(false)}
+        className="absolute top-4 right-4 text-white hover:text-primary text-xl"
+      >
+        ✕
+      </button>
+
+      <h3 className="text-2xl font-bold mb-6 text-white">
+        Tomb Navigation & Contract Management
+      </h3>
+
+      {/* Images */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        {project1Images.map((img, index) => (
+          <img
+            key={index}
+            src={img}
+            alt={`Project image ${index + 1}`}
+            className="rounded-lg object-cover hover:scale-105 transition cursor-pointer"
+          />
+        ))}
+      </div>
+
+    </div>
+  </div>
+)}
       </div>
 
       {/* Project 2 - Balai Alegria E-Commerce */}
