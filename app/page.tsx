@@ -402,11 +402,16 @@ export default function Portfolio() {
 
         {/* Overlay */}
         {showOverlay === 'project1' && (
-  <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    
-    <div className="bg-neutral-900 rounded-xl max-w-5xl w-full p-6 relative overflow-y-auto max-h-[90vh]">
+  <div
+    className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+    onClick={() => setShowOverlay(false)} // click outside closes
+  >
+    {/* CONTENT CARD */}
+    <div
+      className="bg-neutral-900 rounded-xl max-w-5xl w-full p-6 relative overflow-y-auto max-h-[90vh]"
+      onClick={(e) => e.stopPropagation()} // 👈 THIS IS THE KEY
+    >
       
-      {/* Close */}
       <button
         onClick={() => setShowOverlay(false)}
         className="absolute top-4 right-4 text-white hover:text-primary text-xl"
@@ -418,7 +423,6 @@ export default function Portfolio() {
         Tomb Navigation & Contract Management
       </h3>
 
-      {/* Images */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {project1Images.map((img, index) => (
           <img
@@ -426,6 +430,7 @@ export default function Portfolio() {
             src={img}
             alt={`Project image ${index + 1}`}
             className="rounded-lg object-cover hover:scale-105 transition cursor-pointer"
+            onClick={() => console.log("Clicked image", index + 1)}
           />
         ))}
       </div>
@@ -433,6 +438,7 @@ export default function Portfolio() {
     </div>
   </div>
 )}
+
       </div>
 
       {/* Project 2 - Balai Alegria E-Commerce */}
@@ -514,13 +520,6 @@ export default function Portfolio() {
               ))}
             </div>
 
-            <button
-              className="text-accent hover:text-primary transition flex items-center gap-2 group w-fit"
-              onClick={() => setShowOverlay('project3')}
-            >
-              View Project
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
-            </button>
           </div>
         </div>
 
