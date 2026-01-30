@@ -156,14 +156,6 @@ export default function Portfolio() {
   <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
 </button>
 
-<a
-  href="/PierreIsaiahAguinaldo_Resume.pdf"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="px-8 py-4 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition flex items-center justify-center w-full sm:w-[220px]"
->
-  Resume
-</a>
 
 <button
   onClick={() => scrollToSection('contact')}
@@ -171,6 +163,17 @@ export default function Portfolio() {
 >
   Get in Touch
 </button>
+
+<a
+  href="/PierreIsaiahAguinaldo_Resume.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="p-2 border border-primary text-primary rounded-md hover:bg-primary/10 transition"
+  aria-label="Download Resume"
+>
+  📄
+</a>
+
 </div>
                 </div>
 
