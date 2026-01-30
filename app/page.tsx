@@ -162,7 +162,7 @@ export default function Portfolio() {
   rel="noopener noreferrer"
   className="px-8 py-4 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition flex items-center justify-center w-full sm:w-[220px]"
 >
-  Download Resume
+  Resume
 </a>
 
 <button
