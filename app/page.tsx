@@ -436,13 +436,13 @@ export default function Portfolio() {
             ))}
           </div>
 
-          <button
-            className="text-secondary hover:text-accent transition flex items-center gap-2 group"
-            onClick={() => setShowOverlay('project2')}
-          >
-            View Project
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
-          </button>
+      <button
+  className="text-secondary hover:text-accent transition flex items-center gap-2 group"
+  onClick={() => window.open("https://balai-orpin.vercel.app/", "_blank")}
+>
+  View Project
+  <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
+</button>
         </div>
 
         {/* Overlay */}
@@ -572,7 +572,7 @@ export default function Portfolio() {
               </a>
 
               <a
-                href="https://github.com"
+                href="https://github.com/iceiec"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="glass-effect rounded-xl p-8 hover:border-accent/50 transition group text-center"
