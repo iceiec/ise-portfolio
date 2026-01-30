@@ -147,19 +147,32 @@ export default function Portfolio() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                  <button
-                    onClick={() => scrollToSection('projects')}
-                    className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition flex items-center gap-2 group w-fit"
-                  >
-                    View My Work
-                    <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
-                  </button>
+                 <div className="flex flex-col sm:flex-row gap-4 mb-12">
+  <button
+    onClick={() => scrollToSection('projects')}
+    className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition flex items-center gap-2 group w-fit"
+  >
+    View My Work
+    <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
+  </button>
+
+  <a
+    href="/PierreIsaiahAguinaldo_Resume.pdf"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="px-8 py-4 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition w-fit"
+  >
+    Download Resume
+  </a>
+</div>
+
                   <button
                     onClick={() => scrollToSection('contact')}
                     className="px-8 py-4 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition w-fit"
                   >
                     Get in Touch
                   </button>
+                  
                 </div>
 
                 {/* Stats */}
