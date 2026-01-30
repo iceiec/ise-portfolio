@@ -160,16 +160,6 @@ export default function Portfolio() {
                   >
                     Get in Touch
                   </button>
-                 <a
-  href="/PierreIsaiahAguinaldo_Resume.pdf"
-  download
-  target="_blank"
-  rel="noopener noreferrer"
-  className="px-8 py-4 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition w-fit inline-block"
->
-  Download Resume
-</a>
-
                 </div>
 
                 {/* Stats */}
@@ -460,22 +450,17 @@ export default function Portfolio() {
       </div>
 
       {/* Project 2 - Balai Alegria E-Commerce */}
-     <div className="grid md:grid-cols-2 gap-8">
-      {/* Project 1 - Tomb Navigation & Contract Management */}
-       <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-secondary/50 transition group animate-fade-in" style={{ animationDelay: '0.1s' }}>
+      <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-secondary/50 transition group animate-fade-in" style={{ animationDelay: '0.1s' }}>
   <div className="h-64 relative overflow-hidden">
     
     <img
-      src="/fja.png"
+      src="/balai.png"
       alt="Balai Project"
       className="w-full h-full object-cover group-hover:scale-105 transition"
     />
 
     {/* Gradient overlay */}
     <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
-
-  </div>
-
 
   </div>
 
@@ -530,9 +515,17 @@ export default function Portfolio() {
 
       {/* Project 3 - FD AutoHub Ordering System */}
       <div className="md:col-span-2 glass-effect rounded-xl overflow-hidden hover:border-accent/50 transition group animate-fade-in" style={{ animationDelay: '0.2s' }}>
-        <div className="grid md:grid-cols-3">
-          <div className="h-64 md:h-auto bg-gradient-to-br from-accent/20 via-green-500/10 to-primary/20 flex items-center justify-center col-span-1">
-            <div className="text-7xl">🚗</div>
+         <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-secondary/50 transition group animate-fade-in" style={{ animationDelay: '0.1s' }}>
+  <div className="h-64 relative overflow-hidden">
+    
+    <img
+      src="/fja.png"
+      alt="Balai Project"
+      className="w-full h-full object-cover group-hover:scale-105 transition"
+    />
+
+    {/* Gradient overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
           </div>
           <div className="col-span-2 p-8 flex flex-col justify-center">
             <h3 className="text-2xl font-bold mb-3 group-hover:text-accent transition">
