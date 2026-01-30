@@ -171,7 +171,7 @@ export default function Portfolio() {
   className="p-2 border border-primary text-primary rounded-md hover:bg-primary/10 transition"
   aria-label="Download Resume"
 >
-  📄
+  📄 Resume
 </a>
 
 </div>
