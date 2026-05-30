@@ -235,6 +235,46 @@ const skillEmoji: Record<string, string> = {
   Canva: '🖼️',
 };
 
+const getSkillIcon = (item: string) => {
+  const key = item.toLowerCase();
+
+  if (key.includes('git')) return <Github size={14} />;
+  if (key.includes('mysql') || key.includes('postgres') || key.includes('firebase') || key.includes('supabase'))
+    return <Database size={14} />;
+  if (key.includes('react') || key.includes('next')) return <Layers3 size={14} />;
+  if (key.includes('node') || key.includes('express')) return <Code2 size={14} />;
+  if (key.includes('jwt') || key.includes('auth')) return <Sparkles size={14} />;
+
+  // JS / TS badge
+  if (key.includes('javascript')) {
+    return (
+      <div className="flex h-5 w-6 items-center justify-center rounded-sm bg-yellow-400 text-xs font-semibold text-slate-900">JS</div>
+    );
+  }
+
+  if (key.includes('typescript')) {
+    return (
+      <div className="flex h-5 w-6 items-center justify-center rounded-sm bg-sky-400 text-xs font-semibold text-slate-900">TS</div>
+    );
+  }
+
+  // fallback: initials badge
+  const initials = item
+    .split(' ')
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+
+  // pick color deterministically
+  const colors = ['bg-emerald-400', 'bg-cyan-400', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400'];
+  let hash = 0;
+  for (let i = 0; i < item.length; i++) hash = (hash << 5) - hash + item.charCodeAt(i);
+  const color = colors[Math.abs(hash) % colors.length];
+
+  return <div className={`flex h-5 w-6 items-center justify-center rounded-sm text-xs font-semibold text-slate-900 ${color}`}>{initials}</div>;
+};
+
 const tombMobileScreens = ['/mob1.png', '/mob2.png', '/mob3.png', '/mob4.png', '/mob5.png', '/mob6.png', '/mob7.png', '/mob8.png'];
 
 export default function Portfolio() {
@@ -497,7 +537,9 @@ export default function Portfolio() {
               href="/PierreIsaiahAguinaldo_Resume.pdf"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-100 transition hover:bg-cyan-400/15"
+              aria-hidden="true"
+              tabIndex={-1}
+              className="hidden"
             >
               Resume
               <ArrowRight size={16} />
@@ -553,7 +595,7 @@ export default function Portfolio() {
                   </span>
                   <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
                     <Code2 size={14} className="text-emerald-300" />
-                    Full-stack and mobile focused
+                    Full-Stack Developer
                   </span>
                 </div>
 
@@ -832,7 +874,7 @@ export default function Portfolio() {
                             className="group relative flex items-center justify-between rounded-2xl border border-white/8 bg-slate-950/45 px-4 py-3 text-sm text-slate-200 transition-transform hover:translate-x-1 hover:scale-[1.01] hover:bg-white/6"
                           >
                             <div className="flex items-center gap-3">
-                              <span className="text-sm">{skillEmoji[item] ?? '•'}</span>
+                              <span className="flex items-center justify-center">{getSkillIcon(item)}</span>
                               <span>{item}</span>
                             </div>
 
