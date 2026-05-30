@@ -1,684 +1,804 @@
 'use client';
 
-import Image from "next/image";
-import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import {
+  ArrowRight,
+  Code2,
+  ExternalLink,
+  Github,
+  Database,
+  Layers3,
+  Linkedin,
+  Mail,
+  MapPin,
+  Sparkles,
+} from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+const navItems = [
+  { id: 'home', label: 'Home' },
+  { id: 'focus', label: 'Focus' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'contact', label: 'Contact' },
+] as const;
+
+type SectionId = (typeof navItems)[number]['id'];
+
+const stats = [
+  { value: '5+', label: 'Projects delivered' },
+  { value: '10+', label: 'Tools and technologies' },
+  { value: '4th', label: 'Year IT student' },
+];
+
+const roleSummaries = [
+  {
+    title: 'Full-stack delivery',
+    copy:
+      'I start by reviewing the system documentation and constraints, then move through the frontend, backend, and database so the build stays aligned end to end.',
+  },
+  {
+    title: 'Frontend systems',
+    copy:
+      'I design responsive, professional interfaces that are easy to navigate, consistent across devices, and polished enough for real users.',
+  },
+  {
+    title: 'Collaboration mindset',
+    copy:
+      'I communicate clearly, iterate with intention, and keep work organized so teams can review, ship, and maintain it with confidence.',
+  },
+] as const;
+
+const timeline = [
+  {
+    year: '2025 - Present',
+    title: 'Software Engineer Intern',
+    org: 'Argon Software Development Service',
+    copy:
+      'Built responsive web and mobile features with Laravel, Livewire, and Tailwind CSS while collaborating through Agile planning and Git-based reviews.',
+  },
+  {
+    year: '2022 - Present',
+    title: 'Bachelor of Science in Information Technology',
+    org: 'National University - Bulacan',
+    copy:
+      'Focused on mobile and web application development, with a steady emphasis on turning classroom projects into usable products.',
+  },
+  {
+    year: 'Selected work',
+    title: 'Full-stack and mobile projects',
+    org: 'Balai Alegria, FJA, Tomb Navigation',
+    copy:
+      'Academic and client-style projects that sharpened my ability to design, ship, and present complete end-to-end experiences.',
+  },
+] as const;
+
+const projects = [
+  {
+    title: 'Tomb Navigation & Contract Management',
+    category: 'Mobile product case study',
+    image: '/ceme.png',
+    description:
+      'A Flutter-based mobile system for cemetery navigation and contract management, designed around clarity, guided workflows, and practical utility.',
+    tags: ['Flutter', 'Firebase', 'AI Integration', 'Maps API'],
+  },
+  {
+    title: 'Balai Alegria E-Commerce',
+    category: 'Booking platform case study',
+    image: '/balai.png',
+    description:
+      'A resort booking experience with a secure payment flow and a clean interface that makes discovery, booking, and checkout feel straightforward.',
+    tags: ['HTML/CSS', 'JavaScript', 'PayMongo API'],
+    link: 'https://balai-orpin.vercel.app/',
+  },
+  {
+    title: 'FJA Basketball Scheduling Web Application',
+    category: 'Dashboard case study',
+    image: '/fja.png',
+    description:
+      'An operations-focused scheduling and reporting system that streamlines workflows, automates monthly reports, and reduces manual coordination.',
+    tags: ['PHP', 'MySQL', 'Bootstrap', 'Dashboard'],
+  },
+] as const;
+
+const skills = [
+  {
+    title: 'Backend',
+    icon: Code2,
+    items: ['PHP', 'Laravel', 'Python', 'FastAPI', 'REST APIs'],
+  },
+  {
+    title: 'Frontend',
+    icon: Layers3,
+    items: ['React', 'Next.js', 'Tailwind CSS', 'HTML5 & CSS3', 'Bootstrap'],
+  },
+  {
+    title: 'Tools',
+    icon: Sparkles,
+    items: ['Git & GitHub', 'Figma', 'VS Code', 'Vercel', 'npm'],
+  },
+  {
+    title: 'Database',
+    icon: Database,
+    items: ['MySQL', 'PostgreSQL', 'Firebase', 'Supabase', 'SQL'],
+  },
+] as const;
+
+const tombMobileScreens = ['/mob1.png', '/mob2.png', '/mob3.png', '/mob4.png', '/mob5.png', '/mob6.png', '/mob7.png', '/mob8.png'];
 
 export default function Portfolio() {
-  const [activeSection, setActiveSection] = useState('home');
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [showOverlay, setShowOverlay] = useState<string | false>(false);
-
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const heroRef = useRef<HTMLElement | null>(null);
+  const focusRef = useRef<HTMLElement | null>(null);
+  const [activeSection, setActiveSection] = useState<SectionId>('home');
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [openProject, setOpenProject] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
-      
-      // Update active section based on scroll
-      const sections = ['home', 'about', 'experience', 'skills', 'projects', 'contact'];
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 200 && rect.bottom >= 200) {
-            setActiveSection(section);
-            break;
-          }
+      const doc = document.documentElement;
+      const maxScroll = doc.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
+      setScrollProgress(progress);
+
+      const currentSection = navItems.find(({ id }) => {
+        const element = document.getElementById(id);
+        if (!element) {
+          return false;
         }
+
+        const rect = element.getBoundingClientRect();
+        return rect.top <= 180 && rect.bottom >= 180;
+      });
+
+      if (currentSection) {
+        setActiveSection(currentSection.id);
       }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (!rootRef.current) {
+      return;
     }
+
+    const ctx = gsap.context(() => {
+      gsap.from('.hero-badge', {
+        y: 18,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+      });
+
+      gsap.from('.hero-heading', {
+        y: 28,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: 0.1,
+      });
+
+      gsap.from('.hero-copy', {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        delay: 0.2,
+      });
+
+      gsap.from('.hero-cta', {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        delay: 0.25,
+      });
+
+      gsap.from('.hero-stat', {
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top 72%',
+        },
+        y: 18,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: 'power2.out',
+      });
+
+      gsap.to('.hero-parallax', {
+        yPercent: -12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      if (focusRef.current) {
+        const focusCards = gsap.utils.toArray<HTMLElement>('[data-focus-card]');
+
+        const focusTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: focusRef.current,
+            start: 'top top',
+            end: '+=120%',
+            pin: true,
+            scrub: 1,
+          },
+        });
+
+        focusTimeline
+          .fromTo(
+            '.focus-kicker',
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+          )
+          .fromTo(
+            '.focus-heading',
+            { opacity: 0, y: 28 },
+            { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+            '<0.05'
+          )
+          .fromTo(
+            focusCards,
+            { opacity: 0, y: 40, scale: 0.96 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              stagger: 0.16,
+              duration: 0.7,
+              ease: 'power2.out',
+            },
+            '<0.12'
+          )
+          .fromTo(
+            '.focus-side-line',
+            { scaleX: 0 },
+            { scaleX: 1, transformOrigin: 'left center', duration: 0.5, ease: 'power2.out' },
+            '<'
+          );
+      }
+
+      gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
+        gsap.fromTo(
+          element,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.85,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: element,
+              start: 'top 82%',
+            },
+          }
+        );
+      });
+
+      gsap.utils.toArray<HTMLElement>('[data-project]').forEach((element) => {
+        gsap.fromTo(
+          element,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: element,
+              start: 'top 84%',
+            },
+          }
+        );
+      });
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, []);
+
+
+  const scrollToSection = (sectionId: SectionId) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const navItems = ['home', 'about', 'experience', 'skills', 'projects', 'contact'];
-  const project1Images = [
-  "/mob1.png",
-  "/mob2.png",
-  "/mob3.png",
-  "/mob4.png",
-  "/mob5.png",
-  "/mob6.png",
-  "/mob7.png",
-  "/mob8.png",
-];
+  const openTombProject = () => {
+    setOpenProject('tomb');
+  };
 
-  
+  const closeProject = () => {
+    setOpenProject(null);
+  };
 
   return (
-    <div className="dark min-h-screen bg-background text-foreground">
-      {/* Side Navigation - Desktop Only */}
-      <nav className="hidden lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-64 lg:bg-gradient-to-b lg:from-background lg:to-background/80 lg:border-r lg:border-border lg:flex lg:flex-col lg:justify-center lg:items-start lg:px-8 lg:py-8 lg:z-40">
-        <Link
-          href="#"
-          className="text-2xl font-bold gradient-text hover:opacity-80 transition mb-16 block"
-        >
-          Isaiah
-        </Link>
-
-        <div className="space-y-8 w-full">
-          {navItems.map((item) => (
-            <button
-              key={item}
-              onClick={() => scrollToSection(item)}
-              className={`block text-left text-sm font-medium transition-all relative group ${
-                activeSection === item
-                  ? 'text-primary'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              <span className="uppercase tracking-wider">{item}</span>
-              {activeSection === item && (
-                <div className="absolute left-0 bottom-0 h-1 w-8 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
-              )}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-auto flex gap-6 text-muted-foreground">
-          <a
-            href="https://github.com"
-            className="hover:text-primary transition"
-            aria-label="GitHub"
+    <div ref={rootRef} className="min-h-screen bg-background text-foreground">
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-24 border-r border-white/8 bg-background/70 backdrop-blur-xl xl:flex">
+        <div className="flex h-full w-full flex-col items-center justify-between px-4 py-6">
+          <Link
+            href="#home"
+            className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/6 text-sm font-semibold tracking-[0.3em] text-white"
           >
-            <Github size={20} />
-          </a>
-          <a
-            href="https://linkedin.com/in/isaiahaguinaldo"
-            className="hover:text-primary transition"
-            aria-label="LinkedIn"
-          >
-            <Linkedin size={20} />
-          </a>
-          <a
-            href="mailto:isaiah.aguinaldo2@gmail.com"
-            className="hover:text-primary transition"
-            aria-label="Email"
-          >
-            <Mail size={20} />
-          </a>
-        </div>
-      </nav>
-
-      {/* Mobile Top Navigation */}
-      <nav className="lg:hidden sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <Link href="#" className="text-xl font-bold gradient-text">
-            Isaiah
+            PI
           </Link>
-        </div>
-      </nav>
 
-      {/* Main Content */}
-      <main className="lg:ml-64">
-        {/* Hero Section - Asymmetrical */}
-        <section id="home" className="relative min-h-screen flex items-center px-4 md:px-8 py-20">
-          <div className="absolute inset-0 overflow-hidden -z-10">
-            <div className="absolute top-40 right-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-40 left-20 w-72 h-72 bg-secondary/5 rounded-full blur-3xl"></div>
+          <div className="flex flex-1 items-center py-8">
+            <div className="relative h-full w-px rounded-full bg-white/10">
+              <div
+                className="absolute left-0 top-0 w-px rounded-full bg-gradient-to-b from-cyan-400 via-sky-400 to-emerald-400"
+                style={{ height: `${scrollProgress}%` }}
+              />
+            </div>
           </div>
 
-          <div className="max-w-5xl w-full mx-auto">
-            <div className="grid lg:grid-cols-5 gap-12 items-center">
-              {/* Left Content - Takes more space */}
-              <div className="lg:col-span-3 animate-slide-in-left">
-                <div className="mb-6 inline-block">
-                  <span className="text-sm font-semibold text-primary bg-primary/10 px-4 py-2 rounded-full">
-                    Welcome to my portfolio
+          <div className="flex flex-col gap-4 text-white/60">
+            <a href="https://github.com/iceiec" target="_blank" rel="noreferrer" aria-label="GitHub">
+              <Github size={18} />
+            </a>
+            <a
+              href="https://linkedin.com/in/isaiahaguinaldo"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={18} />
+            </a>
+            <a href="mailto:isaiah.aguinaldo2@gmail.com" aria-label="Email">
+              <Mail size={18} />
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <div className="xl:pl-24">
+        <header className="sticky top-0 z-40 border-b border-white/8 bg-background/70 backdrop-blur-xl">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+            <Link href="#home" className="text-lg font-semibold tracking-tight text-white">
+              Pierre Isaiah
+            </Link>
+
+            <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1 lg:flex">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`rounded-full px-4 py-2 text-sm transition ${
+                    activeSection === item.id
+                      ? 'bg-white/12 text-white'
+                      : 'text-white/65 hover:bg-white/6 hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+
+            <a
+              href="/PierreIsaiahAguinaldo_Resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-100 transition hover:bg-cyan-400/15"
+            >
+              Resume
+              <ArrowRight size={16} />
+            </a>
+          </div>
+        </header>
+
+        <main>
+          <section
+            id="home"
+            ref={heroRef}
+            className="relative overflow-hidden px-6 pb-24 pt-20 sm:pt-24 lg:pb-32 lg:pt-28"
+          >
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.14),transparent_32%),radial-gradient(circle_at_top_right,rgba(16,185,129,0.12),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_35%)]" />
+            <div className="hero-parallax absolute -right-24 top-8 h-72 w-72 rounded-full bg-cyan-400/15 blur-3xl" />
+            <div className="hero-parallax absolute left-[-5rem] top-48 h-96 w-96 rounded-full bg-emerald-400/10 blur-3xl" />
+
+            <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.12fr_0.88fr] lg:gap-12">
+              <div>
+                <div className="hero-badge inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2 text-sm text-white/80">
+                  <Sparkles size={16} className="text-cyan-300" />
+                  Aspiring full-stack developer
+                </div>
+
+                <h1 className="hero-heading mt-6 max-w-4xl text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
+                  I build polished, production-minded digital experiences for teams that value clarity, reliability, and strong execution.
+                </h1>
+
+                <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
+                  I am Pierre Isaiah Aguinaldo, a fourth-year IT student and aspiring full-stack developer. I build modern web and mobile interfaces that are responsive, maintainable, and ready to present in a professional setting.
+                </p>
+
+                <div className="hero-cta mt-8 flex flex-col gap-4 sm:flex-row">
+                  <button
+                    onClick={() => scrollToSection('projects')}
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-100"
+                  >
+                    View selected work
+                    <ArrowRight size={16} />
+                  </button>
+                  <button
+                    onClick={() => scrollToSection('contact')}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                  >
+                    Start a conversation
+                  </button>
+                </div>
+
+                <div className="mt-10 flex flex-wrap items-center gap-4 text-sm text-slate-300">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
+                    <MapPin size={14} className="text-cyan-300" />
+                    Philippines
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
+                    <Code2 size={14} className="text-emerald-300" />
+                    Full-stack and mobile focused
                   </span>
                 </div>
 
-                <h1 className="text-6xl md:text-7xl lg:text-6xl font-bold mb-8 leading-tight">
-                  Hi, I'm <br />
-                  <span className="gradient-text">Pierre Isaiah</span>
-                </h1>
-
-                <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-lg">
-                  4th year IT student crafting digital experiences. I specialize in full-stack web development, mobile apps, and bringing ideas to life with clean code and thoughtful design.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                 <div className="flex flex-col sm:flex-row gap-4 mb-12">
-  <button
-  onClick={() => scrollToSection('projects')}
-  className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition flex items-center justify-center gap-2 group w-full sm:w-[220px]"
->
-  View My Work
-  <ArrowRight size={20} className="group-hover:translate-x-1 transition" />
-</button>
-
-
-<button
-  onClick={() => scrollToSection('contact')}
-  className="px-8 py-4 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition flex items-center justify-center w-full sm:w-[220px]"
->
-  Get in Touch
-</button>
-
-<a
-  href="/PierreIsaiahAguinaldo_Resume.pdf"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Download Resume"
-  className="px-4 py-2 border border-primary text-primary rounded-md hover:bg-primary/10 transition inline-flex items-center justify-center gap-2"
->
-  📄
-  <span>Resume</span>
-</a>
-
-
-</div>
-                </div>
-
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border">
-                  <div>
-                    <div className="text-3xl font-bold gradient-text">5+</div>
-                    <p className="text-sm text-muted-foreground mt-1">Projects Done</p>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold gradient-text">10+</div>
-                    <p className="text-sm text-muted-foreground mt-1">Technologies</p>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold gradient-text">4th</div>
-                    <p className="text-sm text-muted-foreground mt-1">Year Student</p>
-                  </div>
+                <div className="mt-12 grid gap-4 sm:grid-cols-3">
+                  {stats.map((stat) => (
+                    <div
+                      key={stat.label}
+                      className="hero-stat rounded-3xl border border-white/10 bg-white/5 p-5 shadow-[0_20px_80px_rgba(2,6,23,0.28)]"
+                    >
+                      <div className="text-3xl font-semibold text-white">{stat.value}</div>
+                      <p className="mt-2 text-sm leading-6 text-slate-300">{stat.label}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Right Visual - Smaller with depth */}
-             <div className="lg:col-span-2 animate-slide-in-right flex justify-center">
-  <div className="relative w-80 h-80">
-    
-    {/* Circular Profile Image */}
-    <div className="w-80 h-80 rounded-full overflow-hidden shadow-2xl border border-white/20 relative z-10">
-      <Image
-        src="/profile.png"
-        alt="Profile"
-        fill
-        className="object-cover"
-        priority
-      />
-    </div>
+              <div className="relative mx-auto w-full max-w-md">
+                <div className="hero-parallax absolute inset-0 rounded-[2rem] bg-gradient-to-br from-cyan-400/20 via-sky-400/10 to-emerald-400/20 blur-3xl" />
+                <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/55 p-4 shadow-[0_30px_120px_rgba(15,23,42,0.45)] backdrop-blur-xl">
+                  <div className="relative h-[500px] overflow-hidden rounded-[1.5rem] border border-white/10">
+                    <Image
+                      src="/profile.png"
+                      alt="Portrait of Pierre Isaiah Aguinaldo"
+                      fill
+                      priority
+                      className="object-cover"
+                      style={{ objectPosition: 'center 18%' }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
 
-    {/* Subtle info below image */}
-    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 text-center z-20">
-      <br></br>
-      <p className="text-white/60 text-sm mt-1">Full-Stack Developer</p>
-    </div>
+                    <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-slate-950/60 px-3 py-2 text-xs font-medium text-cyan-100 backdrop-blur-md">
+                      Open to SWE and full-stack opportunities
+                    </div>
 
-    {/* Background gradient / glass effect */}
-    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl translate-x-4 translate-y-4 blur-xl z-0"></div>
-
-  </div>
-</div>
+                    <div className="absolute bottom-4 left-4 right-4 grid gap-3 sm:grid-cols-2">
+                      <div className="rounded-2xl border border-white/10 bg-slate-950/70 p-4 backdrop-blur-md">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/45">Focus</p>
+                        <p className="mt-2 text-sm font-medium text-white">Clean architecture, sharp UI, practical motion</p>
+                      </div>
+                      <div className="rounded-2xl border border-white/10 bg-slate-950/70 p-4 backdrop-blur-md">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/45">Goal</p>
+                        <p className="mt-2 text-sm font-medium text-white">Join a team building useful, modern products</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>  
-        </section>
-          
+          </section>
 
-        <section id="experience" className="py-20 px-4 md:px-8">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-5xl md:text-6xl font-bold mb-16">
-              Exper<span className="gradient-text">ience</span>
-            </h2>
-
-            <div className="max-w-6xl mx-auto">
-              {/* Left - Text */}
-              <div className="space-y-6">
-                <div className="glass-effect rounded-xl p-8 animate-fade-in">
-                  <h3 className="text-2xl font-bold mb-4 text-primary">Software Engineer Intern</h3>
-                  <p className="text-lg font-semibold mb-2">Argon Software Development Service</p>
-                  <p className="text-muted-foreground">November 2025 - Present</p>
-                  <p className="text-muted-foreground leading-relaxed">
-                   <ul className="text-muted-foreground leading-relaxed list-disc pl-5 space-y-2">
-  <li>
-    Engineered responsive web and mobile features using modern frameworks such as
-    Laravel, Livewire, and Tailwind CSS, ensuring seamless user experiences across
-    platforms.
-  </li>
-  <li>
-    Integrated and maintained secure backend APIs, authentication systems, and
-    relational database connections to support scalable application logic.
-  </li>
-  <li>
-    Collaborated in Agile development cycles, contributing to code reviews,
-    Git-based version control, and cross-functional team planning to deliver
-    high-quality releases.
-  </li>
-</ul>
-
+          <section
+            id="focus"
+            ref={focusRef}
+            className="relative px-6 py-20 lg:py-28"
+          >
+            <div className="mx-auto max-w-7xl">
+              <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
+                <div>
+                  <p className="focus-kicker text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">
+                    Role focus
                   </p>
-                  </div>
-                  </div>
-                </div>
-               </div>
-        </section>
-           
-           
-        
-
-        {/* About Section */}
-        <section id="about" className="py-20 px-4 md:px-8">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-5xl md:text-6xl font-bold mb-16">
-              About <span className="gradient-text">Me</span>
-            </h2>
-
-            <div className="grid lg:grid-cols-2 gap-12">
-              {/* Left - Text */}
-              <div className="space-y-6">
-                <div className="glass-effect rounded-xl p-8 animate-fade-in">
-                  <h3 className="text-2xl font-bold mb-4 text-primary">My Journey</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    I'm a 4th year IT student with a genuine passion for solving problems through code. What started as curiosity about how websites work has evolved into a deep commitment to crafting user-centered digital solutions.
+                  <h2 className="focus-heading mt-4 max-w-2xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+                    Built to read like a candidate profile, not just a gallery of screens.
+                  </h2>
+                  <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+                    This pinned section gives recruiters a quick, high-confidence summary of what I bring to a team: full-stack thinking, polished frontend work, and a collaborative delivery mindset.
                   </p>
-                </div>
-
-                <div className="glass-effect rounded-xl p-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                  <h3 className="text-2xl font-bold mb-4 text-secondary">My Approach</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    I believe in building solutions that are not just functional, but intuitive and delightful to use. Every project is an opportunity to learn, grow, and make a real impact.
+                  <p className="mt-8 max-w-xl text-sm leading-6 text-slate-400">
+                    Use this as a quick read on how I approach delivery before reviewing the case studies below.
                   </p>
-                </div>
-              </div>
-
-              {/* Right - Key Info */}
-              <div className="space-y-6">
-                <div className="glass-effect rounded-xl p-8">
-                  <h4 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4">
-                    Education
-                  </h4>
-                  <p className="text-lg font-semibold mb-2">National University - Bulacan</p>
-                  <p className="text-sm text-muted-foreground mt-2">2022 - Present</p>
-                  <p className="text-sm text-muted-foreground mt-2">Bachelor of Science in Information Technology</p>
-                  <p className="text-muted-foreground">Specialization in Mobile and Web Application</p>
+                  <div className="focus-side-line mt-8 h-px w-full origin-left bg-gradient-to-r from-cyan-400 via-emerald-400 to-transparent" />
                 </div>
 
-                <div className="glass-effect rounded-xl p-8">
-                  <h4 className="text-sm font-semibold uppercase tracking-wider text-secondary mb-4">
-                    Interests
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {['Web Dev', 'Mobile Apps', 'UI/UX', 'AI/ML', 'Open Source'].map(
-                      (interest) => (
-                        <span
-                          key={interest}
-                          className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm"
-                        >
-                          {interest}
+                <div className="grid gap-4 md:grid-cols-3">
+                  {roleSummaries.map((role, index) => (
+                    <article
+                      key={role.title}
+                      data-focus-card
+                      className="group min-h-64 rounded-[1.75rem] border border-white/10 bg-white/5 p-6 shadow-[0_20px_80px_rgba(15,23,42,0.18)] backdrop-blur-sm"
+                    >
+                      <div className="flex items-center justify-between gap-4">
+                        <span className="text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300">
+                          0{index + 1}
                         </span>
-                      )
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Skills Section - Bento Grid */}
-        <section id="skills" className="py-20 px-4 md:px-8">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-5xl md:text-6xl font-bold mb-16">
-              Technical <span className="gradient-text">Skills</span>
-            </h2>
-
-            <div className="grid md:grid-cols-3 gap-6 auto-rows-max">
-              {/* Languages - Large card */}
-              <div className="md:col-span-1 glass-effect rounded-xl p-8 animate-fade-in">
-                <h3 className="text-lg font-bold mb-6 text-primary">Languages</h3>
-                <div className="space-y-3">
-                  {['JavaScript', 'TypeScript', 'PHP', 'Java', 'C#', 'Dart'].map((skill) => (
-                    <div key={skill} className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-primary"></div>
-                      <span className="text-foreground">{skill}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Frontend */}
-              <div className="md:col-span-1 glass-effect rounded-xl p-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <h3 className="text-lg font-bold mb-6 text-secondary">Frontend</h3>
-                <div className="space-y-3">
-                  {['React', 'Next.js', 'Tailwind CSS', 'HTML5 & CSS3', 'Figma'].map((skill) => (
-                    <div key={skill} className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-secondary"></div>
-                      <span className="text-foreground text-sm">{skill}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Backend & Tools */}
-              <div className="md:col-span-1 glass-effect rounded-xl p-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <h3 className="text-lg font-bold mb-6 text-accent">Backend & Tools</h3>
-                <div className="space-y-3">
-                  {['Firebase', 'MySQL', 'Flutter', 'Git & GitHub', 'REST APIs'].map((skill) => (
-                    <div key={skill} className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-accent"></div>
-                      <span className="text-foreground text-sm">{skill}</span>
-                    </div>
+                        <div className="h-2 w-2 rounded-full bg-emerald-300" />
+                      </div>
+                      <h3 className="mt-5 text-2xl font-semibold text-white">{role.title}</h3>
+                      <p className="mt-4 leading-7 text-slate-300">{role.copy}</p>
+                      <div className="mt-6 rounded-full border border-white/10 bg-slate-950/40 px-4 py-2 text-sm text-white/70 transition group-hover:border-cyan-300/30 group-hover:text-white">
+                        Scroll to see how this translates into the case studies below.
+                      </div>
+                    </article>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Projects Section - Bento Layout */}
-        <section id="projects" className="py-20 px-4 md:px-8">
-  <div className="max-w-5xl mx-auto">
-    <h2 className="text-5xl md:text-6xl font-bold mb-16">
-      Featured <span className="gradient-text">Projects</span>
-    </h2>
+          <section id="experience" className="px-6 py-20 lg:py-28">
+            <div className="mx-auto max-w-7xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-300">Experience</p>
+              <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+                Practical experience, academic grounding, and a portfolio built for real hiring conversations.
+              </h2>
 
-    <div className="grid md:grid-cols-2 gap-8">
-      {/* Project 1 - Tomb Navigation & Contract Management */}
-       <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-secondary/50 transition group animate-fade-in" style={{ animationDelay: '0.1s' }}>
-  <div className="h-64 relative overflow-hidden">
-    
-    <img
-      src="/ceme.png"
-      alt="Balai Project"
-      className="w-full h-full object-cover group-hover:scale-105 transition"
-    />
-
-    {/* Gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
-
-  </div>
-
-        <div className="p-8">
-          <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition">
-            Tomb Navigation & Contract Management
-          </h3>
-          <p className="text-muted-foreground mb-6">
-            Advanced Flutter mobile app combining cemetery navigation with intelligent contract management. Features AI-powered chatbot, PDF export capabilities, and immersive 360° interactive maps.
-          </p>
-
-          <div className="flex flex-wrap gap-2 mb-6">
-            {['Flutter', 'Firebase', 'AI Integration', 'Maps API'].map((tech) => (
-              <span key={tech} className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full">
-                {tech}
-              </span>
-            ))}
-          </div>
-
-          <button
-            className="text-primary hover:text-secondary transition flex items-center gap-2 group"
-            onClick={() => setShowOverlay('project1')}
-          >
-            View Project
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
-          </button>
-        </div>
-
-        {/* Overlay */}
-        {showOverlay === 'project1' && (
-  <div
-    className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-    onClick={() => setShowOverlay(false)} // click outside closes
-  >
-    {/* CONTENT CARD */}
-    <div
-      className="bg-neutral-900 rounded-xl max-w-5xl w-full p-6 relative overflow-y-auto max-h-[90vh]"
-      onClick={(e) => e.stopPropagation()} // 👈 THIS IS THE KEY
-    >
-      
-      <button
-        onClick={() => setShowOverlay(false)}
-        className="absolute top-4 right-4 text-white hover:text-primary text-xl"
-      >
-        ✕
-      </button>
-
-      <h3 className="text-2xl font-bold mb-6 text-white">
-        Tomb Navigation & Contract Management
-      </h3>
-
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-        {project1Images.map((img, index) => (
-          <img
-            key={index}
-            src={img}
-            alt={`Project image ${index + 1}`}
-            className="rounded-lg object-cover hover:scale-105 transition cursor-pointer"
-            onClick={() => console.log("Clicked image", index + 1)}
-          />
-        ))}
-      </div>
-
-    </div>
-  </div>
-)}
-
-      </div>
-
-      {/* Project 2 - Balai Alegria E-Commerce */}
-      <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-secondary/50 transition group animate-fade-in" style={{ animationDelay: '0.1s' }}>
-  <div className="h-64 relative overflow-hidden">
-    
-    <img
-      src="/balai.png"
-      alt="Balai Project"
-      className="w-full h-full object-cover group-hover:scale-105 transition"
-    />
-
-    {/* Gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
-
-  </div>
-
-        <div className="p-8">
-          <h3 className="text-2xl font-bold mb-3 group-hover:text-secondary transition">
-            Balai Alegria E-Commerce
-          </h3>
-          <p className="text-muted-foreground mb-6">
-            Full-featured resort booking platform with integrated payment processing. Seamless user experience with secure transactions via PayMongo API.
-          </p>
-
-          <div className="flex flex-wrap gap-2 mb-6">
-            {['HTML/CSS', 'JavaScript', 'PayMongo API'].map((tech) => (
-              <span key={tech} className="text-xs bg-secondary/10 text-secondary px-3 py-1 rounded-full">
-                {tech}
-              </span>
-            ))}
-          </div>
-
-      <button
-  className="text-secondary hover:text-accent transition flex items-center gap-2 group"
-  onClick={() => window.open("https://balai-orpin.vercel.app/", "_blank")}
->
-  View Project
-  <ArrowRight size={16} className="group-hover:translate-x-1 transition" />
-</button>
-        </div>
-
-        {/* Overlay */}
-        {showOverlay === 'project2' && (
-          <div
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center text-white p-6 rounded-xl z-20 cursor-pointer"
-            onClick={() => setShowOverlay(false)}
-          >
-            <div className="text-center max-w-xs">
-              <h3 className="text-2xl font-bold mb-3">
-                Balai Alegria E-Commerce
-              </h3>
-              <p className="mb-4">
-                Click anywhere to close. This overlay can contain screenshots, features, or links to GitHub/Live demo.
-              </p>
-              <button
-                onClick={() => setShowOverlay(false)}
-                className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/80 transition"
-              >
-                Close
-              </button>
+              <div className="mt-12 grid gap-5 lg:grid-cols-3">
+                {timeline.map((item) => (
+                  <article
+                    key={item.title}
+                    data-reveal
+                    className="rounded-[1.75rem] border border-white/10 bg-white/5 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.2)]"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300">{item.year}</p>
+                    <h3 className="mt-4 text-2xl font-semibold text-white">{item.title}</h3>
+                    <p className="mt-2 text-sm font-medium text-slate-200">{item.org}</p>
+                    <p className="mt-4 leading-7 text-slate-300">{item.copy}</p>
+                  </article>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          </section>
 
-      {/* Project 3 - FD AutoHub Ordering System */}
-      <div className="md:col-span-2 glass-effect rounded-xl overflow-hidden hover:border-accent/50 transition group animate-fade-in" style={{ animationDelay: '0.2s' }}>
-         <div className="md:col-span-1 glass-effect rounded-xl overflow-hidden hover:border-secondary/50 transition group animate-fade-in" style={{ animationDelay: '0.1s' }}>
-  <div className="h-64 relative overflow-hidden">
-    
-    <img
-      src="/fja.png"
-      alt="Balai Project"
-      className="w-full h-full object-cover group-hover:scale-105 transition"
-    />
+          <section id="projects" className="px-6 py-20 lg:py-28">
+            <div className="mx-auto max-w-7xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">Case studies</p>
+              <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+                Projects presented with the same care I would bring to a real product review.
+              </h2>
 
-    {/* Gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
-          </div>
-          <div className="col-span-2 p-8 flex flex-col justify-center">
-            <h3 className="text-2xl font-bold mb-3 group-hover:text-accent transition">
-              FJA Basketball Scheduling Web Application
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Designed and developed a PHP and CSS-based scheduling and management platform tailored for FJA Basketball. The system streamlined operations by providing administrators and clients with automated PDF report generation and monthly 
-              performance and scheduling reports, reducing manual workload and improving overall efficiency
-            </p>
+              <div className="mt-12 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+                {projects.map((project) => (
+                  <article
+                    key={project.title}
+                    data-project
+                    className={`group overflow-hidden rounded-[1.9rem] border border-white/10 bg-white/5 shadow-[0_28px_100px_rgba(15,23,42,0.3)] transition duration-300 hover:-translate-y-1 hover:border-white/20 ${
+                      project.title === 'Tomb Navigation & Contract Management' ? 'cursor-pointer' : ''
+                    }`}
+                    onClick={project.title === 'Tomb Navigation & Contract Management' ? openTombProject : undefined}
+                  >
+                    <div className="relative h-64 overflow-hidden">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
+                      <div className="absolute left-4 top-4 rounded-full border border-white/10 bg-slate-950/65 px-3 py-2 text-xs font-medium text-white/80 backdrop-blur-md">
+                        {project.category}
+                      </div>
+                    </div>
 
-            <div className="flex flex-wrap gap-2 mb-6">
-              {['PHP', 'MySQL', 'Bootstrap', 'Dashboard'].map((tech) => (
-                <span key={tech} className="text-xs bg-accent/10 text-accent px-3 py-1 rounded-full">
-                  {tech}
-                </span>
-              ))}
+                    <div className="p-6">
+                      <h3 className="text-2xl font-semibold text-white transition group-hover:text-cyan-100">
+                        {project.title}
+                      </h3>
+                      <p className="mt-4 leading-7 text-slate-300">{project.description}</p>
+
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full border border-white/10 bg-slate-950/60 px-3 py-1 text-xs font-medium text-slate-200"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {project.link ? (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-100 transition hover:text-white"
+                        >
+                          Open live project
+                          <ExternalLink size={16} />
+                        </a>
+                      ) : (
+                        <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/65">
+                          Open case study
+                          <ArrowRight size={16} />
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
+          </section>
 
-          </div>
-        </div>
-
-        {/* Overlay */}
-        {showOverlay === 'project3' && (
-          <div
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center text-white p-6 rounded-xl z-20 cursor-pointer"
-            onClick={() => setShowOverlay(false)}
-          >
-            <div className="text-center max-w-xs">
-              <h3 className="text-2xl font-bold mb-3">
-                FD AutoHub Ordering System
-              </h3>
-              <p className="mb-4">
-                Click anywhere to close. This overlay can contain screenshots, features, or links to GitHub/Live demo.
-              </p>
-              <button
-                onClick={() => setShowOverlay(false)}
-                className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/80 transition"
+          {openProject === 'tomb' && (
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 py-8 backdrop-blur-sm"
+              onClick={closeProject}
+            >
+              <div
+                className="relative max-h-[92vh] w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/10 bg-slate-950 p-6 shadow-[0_35px_120px_rgba(0,0,0,0.45)] sm:p-8"
+                onClick={(event) => event.stopPropagation()}
               >
-                Close
-              </button>
+                <button
+                  type="button"
+                  onClick={closeProject}
+                  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10"
+                  aria-label="Close project modal"
+                >
+                  ×
+                </button>
+
+                <div className="max-w-3xl pr-12">
+                  <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">Tomb Navigation & Contract Management</p>
+                  <h3 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
+                    Mobile case study with guided navigation and contract management workflows.
+                  </h3>
+                  <p className="mt-5 text-base leading-7 text-slate-300">
+                    A Flutter mobile app built to help users navigate cemetery spaces and manage contracts with clearer structure, faster access, and a more practical mobile experience.
+                  </p>
+                </div>
+
+                <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                  {tombMobileScreens.map((screen, index) => (
+                    <div
+                      key={screen}
+                      className="relative aspect-[9/16] overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5"
+                    >
+                      <Image
+                        src={screen}
+                        alt={`Tomb Navigation mobile screenshot ${index + 1}`}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {['Flutter', 'Firebase', 'AI Integration', 'Maps API', 'Mobile UX'].map((tag) => (
+                    <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-200">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    </div>
-  </div>
-</section>
+          )}
 
+          <section id="skills" className="px-6 py-20 lg:py-28">
+            <div className="mx-auto max-w-7xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-300">Skills</p>
+              <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+                A focused stack that supports modern full-stack and mobile delivery.
+              </h2>
 
-        {/* Contact Section */}
-        <section id="contact" className="py-20 px-4 md:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 text-center">
-              Let's <span className="gradient-text">Connect</span>
-            </h2>
-            <p className="text-xl text-muted-foreground text-center mb-16">
-              I'm always interested in hearing about new projects and opportunities. Let's talk!
-            </p>
+              <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+                {skills.map((group) => {
+                  const Icon = group.icon;
 
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
-              <a
-                href="mailto:isaiah.aguinaldo2@gmail.com"
-                className="glass-effect rounded-xl p-8 hover:border-primary/50 transition group text-center"
-              >
-                <Mail
-                  size={40}
-                  className="mx-auto mb-4 text-primary group-hover:scale-110 transition"
-                />
-                <h3 className="font-semibold mb-2">Email</h3>
-                <p className="text-sm text-muted-foreground break-all hover:text-primary transition">
-                  isaiah.aguinaldo2@gmail.com
+                  return (
+                    <article
+                      key={group.title}
+                      data-reveal
+                      className="rounded-[1.75rem] border border-white/10 bg-white/5 p-6"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/8 text-cyan-200">
+                          <Icon size={20} />
+                        </div>
+                        <h3 className="text-xl font-semibold text-white">{group.title}</h3>
+                      </div>
+
+                      <div className="mt-6 space-y-3">
+                        {group.items.map((item) => (
+                          <div key={item} className="flex items-center justify-between rounded-2xl border border-white/8 bg-slate-950/45 px-4 py-3 text-sm text-slate-200">
+                            <span>{item}</span>
+                            <span className="h-2 w-2 rounded-full bg-cyan-300" />
+                          </div>
+                        ))}
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+          <section id="contact" className="px-6 py-20 lg:py-28">
+            <div className="mx-auto max-w-5xl">
+              <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/8 via-white/5 to-cyan-400/8 p-8 shadow-[0_30px_120px_rgba(15,23,42,0.35)] sm:p-10 lg:p-12">
+                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">Contact</p>
+                <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+                  Let’s talk about full-time SWE opportunities, internships, or a product idea worth building.
+                </h2>
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+                  I’m looking for a team where I can contribute, learn fast, and keep building polished experiences that feel credible from day one.
                 </p>
-              </a>
 
-              <a
-                href="https://linkedin.com/in/isaiahaguinaldo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass-effect rounded-xl p-8 hover:border-secondary/50 transition group text-center"
-              >
-                <Linkedin
-                  size={40}
-                  className="mx-auto mb-4 text-secondary group-hover:scale-110 transition"
-                />
-                <h3 className="font-semibold mb-2">LinkedIn</h3>
-                <p className="text-sm text-muted-foreground hover:text-secondary transition">
-                  Isaiah Aguinaldo
-                </p>
-              </a>
+                <div className="mt-10 grid gap-4 md:grid-cols-3">
+                  <a
+                    href="mailto:isaiah.aguinaldo2@gmail.com"
+                    className="rounded-[1.5rem] border border-white/10 bg-slate-950/45 p-5 transition hover:border-cyan-300/30 hover:bg-slate-950/60"
+                  >
+                    <Mail className="text-cyan-200" size={28} />
+                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-white/45">Email</p>
+                    <p className="mt-2 text-sm font-medium text-white">isaiah.aguinaldo2@gmail.com</p>
+                  </a>
 
-              <a
-                href="https://github.com/iceiec"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass-effect rounded-xl p-8 hover:border-accent/50 transition group text-center"
-              >
-                <Github
-                  size={40}
-                  className="mx-auto mb-4 text-accent group-hover:scale-110 transition"
-                />
-                <h3 className="font-semibold mb-2">GitHub</h3>
-                <p className="text-sm text-muted-foreground hover:text-accent transition">
-                  View my repositories
-                </p>
-              </a>
+                  <a
+                    href="https://linkedin.com/in/isaiahaguinaldo"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-[1.5rem] border border-white/10 bg-slate-950/45 p-5 transition hover:border-cyan-300/30 hover:bg-slate-950/60"
+                  >
+                    <Linkedin className="text-cyan-200" size={28} />
+                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-white/45">LinkedIn</p>
+                    <p className="mt-2 text-sm font-medium text-white">Isaiah Aguinaldo</p>
+                  </a>
+
+                  <a
+                    href="https://github.com/iceiec"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-[1.5rem] border border-white/10 bg-slate-950/45 p-5 transition hover:border-cyan-300/30 hover:bg-slate-950/60"
+                  >
+                    <Github className="text-cyan-200" size={28} />
+                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-white/45">GitHub</p>
+                    <p className="mt-2 text-sm font-medium text-white">View my repositories</p>
+                  </a>
+                </div>
+
+                <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm text-slate-400">Available for internships, junior SWE roles, and freelance collaborations.</p>
+                  <button
+                    onClick={() => scrollToSection('home')}
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-100"
+                  >
+                    Back to top
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              </div>
             </div>
+          </section>
 
-            <div className="glass-effect rounded-xl p-12 text-center">
-              <p className="text-muted-foreground mb-6">
-                Open to freelance work, collaborations, and full-time opportunities
-              </p>
-              <button
-                onClick={() => scrollToSection('home')}
-                className="px-8 py-3 bg-primary/10 border border-primary text-primary rounded-lg font-semibold hover:bg-primary/20 transition inline-flex items-center gap-2"
-              >
-                Back to Top
-                <ArrowRight size={16} />
-              </button>
+          <footer className="border-t border-white/8 px-6 py-8">
+            <div className="mx-auto flex max-w-7xl flex-col gap-3 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+              <p>© {new Date().getFullYear()} Pierre Isaiah Aguinaldo. All rights reserved.</p>
+              <p>Designed with React, Next.js, and GSAP.</p>
             </div>
-          </div>
-        </section>
-
-        {/* Footer */}
-        <footer className="border-t border-border py-8 px-4 md:px-8">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="text-muted-foreground text-sm">
-                © {new Date().getFullYear()} Pierre Isaiah Aguinaldo. All rights reserved.
-              </p>
-              <p className="text-muted-foreground text-sm">
-                Designed & Built with React & Next.js
-              </p>
-            </div>
-          </div>
-        </footer>
-      </main>
+          </footer>
+        </main>
+      </div>
     </div>
   );
 }

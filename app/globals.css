@@ -40,38 +40,38 @@
 }
 
 .dark {
-  --background: #0f1419;
-  --foreground: #ffffff;
-  --card: #1a2332;
-  --card-foreground: #ffffff;
-  --popover: #1a2332;
-  --popover-foreground: #ffffff;
-  --primary: #0ea5e9;
-  --primary-foreground: #0f1419;
-  --secondary: #06b6d4;
-  --secondary-foreground: #0f1419;
-  --muted: #475569;
+  --background: #07111d;
+  --foreground: #f8fafc;
+  --card: #0f1b2a;
+  --card-foreground: #f8fafc;
+  --popover: #0f1b2a;
+  --popover-foreground: #f8fafc;
+  --primary: #38bdf8;
+  --primary-foreground: #07111d;
+  --secondary: #2dd4bf;
+  --secondary-foreground: #07111d;
+  --muted: #1b2a3b;
   --muted-foreground: #cbd5e1;
-  --accent: #06d6a6;
-  --accent-foreground: #0f1419;
+  --accent: #34d399;
+  --accent-foreground: #07111d;
   --destructive: #ef4444;
   --destructive-foreground: #fca5a5;
-  --border: #233554;
-  --input: #1a2332;
-  --ring: #0ea5e9;
-  --chart-1: #0ea5e9;
-  --chart-2: #06b6d4;
-  --chart-3: #06d6a6;
+  --border: #1f3348;
+  --input: #132131;
+  --ring: #38bdf8;
+  --chart-1: #38bdf8;
+  --chart-2: #2dd4bf;
+  --chart-3: #34d399;
   --chart-4: #14b8a6;
   --chart-5: #10b981;
-  --sidebar: #0f1419;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #0ea5e9;
-  --sidebar-primary-foreground: #0f1419;
-  --sidebar-accent: #06b6d4;
-  --sidebar-accent-foreground: #0f1419;
-  --sidebar-border: #233554;
-  --sidebar-ring: #0ea5e9;
+  --sidebar: #07111d;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #38bdf8;
+  --sidebar-primary-foreground: #07111d;
+  --sidebar-accent: #2dd4bf;
+  --sidebar-accent-foreground: #07111d;
+  --sidebar-border: #1f3348;
+  --sidebar-ring: #38bdf8;
 }
 
 @theme inline {
@@ -119,14 +119,24 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
 
-/* Modern Portfolio Styles */
-html {
-  scroll-behavior: smooth;
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 28%),
+      radial-gradient(circle at top right, rgba(45, 212, 191, 0.1), transparent 24%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 30%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgba(56, 189, 248, 0.35);
+    color: #f8fafc;
+  }
 }
 
 /* Smooth fade animations */

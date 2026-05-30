@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "export": "next export",
-      "predeploy": "next build && next export",
-  "deploy": "gh-pages -d out"
+    "predeploy": "next build && next export",
+    "deploy": "gh-pages -d out"
   },
   "dependencies": {
     "@emailjs/browser": "4.4.1",
@@ -46,6 +46,7 @@
     "cmdk": "1.0.4",
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
+    "gsap": "^3.15.0",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
     "next": "16.0.10",
