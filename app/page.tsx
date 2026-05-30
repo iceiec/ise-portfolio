@@ -30,7 +30,7 @@ const navItems = [
 type SectionId = (typeof navItems)[number]['id'];
 
 const stats = [
-  { value: '5+', label: 'Projects delivered' },
+  { value: '10+', label: 'Projects delivered' },
   { value: '10+', label: 'Tools and technologies' },
   { value: '4th', label: 'Year IT student' },
 ];
@@ -55,7 +55,7 @@ const roleSummaries = [
 
 const timeline = [
   {
-    year: '2025 - Present',
+    year: 'NOVEMBER 2025 - MAY 2026',
     title: 'Software Engineer Intern',
     org: 'Argon Software Development Service',
     copy:
@@ -84,7 +84,7 @@ const projects = [
     image: '/ceme.png',
     description:
       'A Flutter-based mobile system for cemetery navigation and contract management, designed around clarity, guided workflows, and practical utility.',
-    tags: ['Flutter', 'Firebase', 'AI Integration', 'Maps API'],
+    tags: ['Flutter', 'Firebase', 'AI Integration', 'Maps API', 'Google Gemini'],
   },
   {
     title: 'Balai Alegria E-Commerce',
@@ -92,7 +92,7 @@ const projects = [
     image: '/balai.png',
     description:
       'A resort booking experience with a secure payment flow and a clean interface that makes discovery, booking, and checkout feel straightforward.',
-    tags: ['HTML/CSS', 'JavaScript', 'PayMongo API'],
+    tags: ['HTML/CSS', 'Express.JS', 'Node.Js', 'PayMongo API'],
     link: 'https://balai-orpin.vercel.app/',
   },
   {
@@ -101,32 +101,139 @@ const projects = [
     image: '/fja.png',
     description:
       'An operations-focused scheduling and reporting system that streamlines workflows, automates monthly reports, and reduces manual coordination.',
-    tags: ['PHP', 'MySQL', 'Bootstrap', 'Dashboard'],
+    tags: ['PHP', 'MySQL', 'Bootstrap'],
   },
 ] as const;
 
 const skills = [
   {
-    title: 'Backend',
+    title: 'Programming Languages',
     icon: Code2,
-    items: ['PHP', 'Laravel', 'Python', 'FastAPI', 'REST APIs'],
+    items: [
+      'JavaScript (ES6+)',
+      'TypeScript',
+      'PHP',
+      'Java',
+      'C#',
+      'Dart',
+      'HTML5',
+      'CSS3',
+    ],
   },
   {
-    title: 'Frontend',
+    title: 'Frontend Development',
     icon: Layers3,
-    items: ['React', 'Next.js', 'Tailwind CSS', 'HTML5 & CSS3', 'Bootstrap'],
+    items: [
+      'React',
+      'Next.js',
+      'Bootstrap',
+      'Tailwind CSS',
+      'Responsive Web Design',
+      'Component-Based Architecture',
+      'UI Development',
+    ],
   },
   {
-    title: 'Tools',
-    icon: Sparkles,
-    items: ['Git & GitHub', 'Figma', 'VS Code', 'Vercel', 'npm'],
+    title: 'Backend Development',
+    icon: Code2,
+    items: [
+      'Node.js',
+      'Express.js',
+      'Laravel',
+      'FastAPI',
+      'RESTful API Development',
+      'Server-Side Development',
+    ],
   },
   {
-    title: 'Database',
+    title: 'Databases / BaaS',
     icon: Database,
-    items: ['MySQL', 'PostgreSQL', 'Firebase', 'Supabase', 'SQL'],
+    items: ['Supabase', 'Firebase', 'MySQL', 'PostgreSQL', 'SQL', 'Data Modeling', 'Authentication'],
+  },
+  {
+    title: 'Security / Authentication',
+    icon: Sparkles,
+    items: ['JWT', 'Role-Based Access Control (RBAC)', 'Authentication & Authorization'],
+  },
+  {
+    title: 'Tools & Version Control',
+    icon: Github,
+    items: ['Git', 'GitHub', 'Trello', 'Vercel', 'npm', 'AI-Assisted Development Tools', 'GitHub Copilot'],
+  },
+  {
+    title: 'Design Tools',
+    icon: Layers3,
+    items: ['Figma', 'Canva', 'Adobe Photoshop'],
   },
 ] as const;
+
+const skillDescriptions: Record<string, string> = {
+  'JavaScript (ES6+)': 'Modern JavaScript syntax, async/await, and browser APIs.',
+  TypeScript: 'Typed JavaScript for safer large-scale codebases.',
+  Python: 'Scripting, automation, and backend services.',
+  PHP: 'Server-side scripting and Laravel experience.',
+  Java: 'Object-oriented programming and ecosystem basics.',
+  'C#': 'General-purpose language; familiarity with .NET basics.',
+  Dart: 'Flutter mobile development language.',
+  'React.js': 'Component-driven UI, hooks, and state management.',
+  'Next.js': 'Server rendering, routing, and optimized builds.',
+  HTML5: 'Semantic markup and accessibility basics.',
+  CSS3: 'Layout, responsive design, and modern CSS features.',
+  Bootstrap: 'Rapid responsive UI building with components.',
+  'Responsive Web Design': 'Designing layouts that adapt to devices.',
+  'Node.js': 'Server-side JavaScript runtime and ecosystems.',
+  'Express.js': 'Lightweight web servers and REST APIs.',
+  FastAPI: 'High-performance Python APIs with async support.',
+  'RESTful API Development': 'Designing resource-based API endpoints.',
+  MySQL: 'Relational database design and CRUD operations.',
+  Supabase: 'BaaS with auth, real-time, and Postgres under-the-hood.',
+  Firebase: 'Realtime DB, auth, and hosting for quick apps.',
+  PostgreSQL: 'Advanced relational DB features and SQL.',
+  JWT: 'Token-based authentication for stateless APIs.',
+  'Authentication & Authorization': 'Managing access and identity flows.',
+  RBAC: 'Role-based permission modeling.',
+  Git: 'Version control fundamentals and branching.',
+  GitHub: 'Repository hosting, PR workflow, and actions basics.',
+  Trello: 'Task tracking and simple kanban workflows.',
+  'Agile/Scrum': 'Iterative planning, standups, and sprints.',
+  Figma: 'Interface design and collaborative prototyping.',
+  'Adobe Photoshop': 'Image editing and visual polish.',
+  Canva: 'Quick visual assets and marketing graphics.',
+};
+
+const skillEmoji: Record<string, string> = {
+  'JavaScript (ES6+)': '🟨',
+  TypeScript: '🔷',
+  Python: '🐍',
+  PHP: '🐘',
+  Java: '☕',
+  'C#': '♯',
+  Dart: '🎯',
+  'React.js': '⚛️',
+  'Next.js': '➡️',
+  HTML5: '🌐',
+  CSS3: '🎨',
+  Bootstrap: '🅱️',
+  'Responsive Web Design': '📱',
+  'Node.js': '🟩',
+  'Express.js': '🚂',
+  FastAPI: '⚡',
+  'RESTful API Development': '🔗',
+  MySQL: '🐬',
+  Supabase: '🧩',
+  Firebase: '🔥',
+  PostgreSQL: '🐘',
+  JWT: '🔐',
+  'Authentication & Authorization': '🔒',
+  RBAC: '🛡️',
+  Git: '🔧',
+  GitHub: '🐙',
+  Trello: '📋',
+  'Agile/Scrum': '⚙️',
+  Figma: '🎨',
+  'Adobe Photoshop': '🖌️',
+  Canva: '🖼️',
+};
 
 const tombMobileScreens = ['/mob1.png', '/mob2.png', '/mob3.png', '/mob4.png', '/mob5.png', '/mob6.png', '/mob7.png', '/mob8.png'];
 
@@ -720,9 +827,23 @@ export default function Portfolio() {
 
                       <div className="mt-6 space-y-3">
                         {group.items.map((item) => (
-                          <div key={item} className="flex items-center justify-between rounded-2xl border border-white/8 bg-slate-950/45 px-4 py-3 text-sm text-slate-200">
-                            <span>{item}</span>
-                            <span className="h-2 w-2 rounded-full bg-cyan-300" />
+                          <div
+                            key={item}
+                            className="group relative flex items-center justify-between rounded-2xl border border-white/8 bg-slate-950/45 px-4 py-3 text-sm text-slate-200 transition-transform hover:translate-x-1 hover:scale-[1.01] hover:bg-white/6"
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className="text-sm">{skillEmoji[item] ?? '•'}</span>
+                              <span>{item}</span>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              <span className="h-2 w-2 rounded-full bg-cyan-300 transition-transform group-hover:scale-110" />
+                              <ArrowRight size={14} className="opacity-0 transition-opacity group-hover:opacity-100" />
+                            </div>
+
+                            <div className="pointer-events-none absolute -top-12 left-4 z-50 hidden w-max rounded-md bg-slate-900/90 px-3 py-1 text-xs text-white shadow transition-all group-hover:block group-hover:opacity-100">
+                              {skillDescriptions[item] ?? ''}
+                            </div>
                           </div>
                         ))}
                       </div>
