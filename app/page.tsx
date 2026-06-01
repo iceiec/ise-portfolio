@@ -29,6 +29,12 @@ const navItems = [
 
 type SectionId = (typeof navItems)[number]['id'];
 
+const heroMessages = [
+  'Open to work as a full-stack developer',
+  'I am Pierre Isaiah I. Aguinaldo',
+  'I am a full-stack developer',
+];
+
 const stats = [
   { value: '10+', label: 'Projects delivered' },
   { value: '10+', label: 'Tools and technologies' },
@@ -284,6 +290,61 @@ export default function Portfolio() {
   const [activeSection, setActiveSection] = useState<SectionId>('home');
   const [scrollProgress, setScrollProgress] = useState(0);
   const [openProject, setOpenProject] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [heroMessageIndex, setHeroMessageIndex] = useState(0);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+
+  useEffect(() => {
+    const stages = [
+      { progress: 25, delay: 300 },
+      { progress: 50, delay: 600 },
+      { progress: 77, delay: 900 },
+      { progress: 100, delay: 1200 },
+    ];
+
+    const timers = stages.map((stage) =>
+      window.setTimeout(() => setLoadingProgress(stage.progress), stage.delay)
+    );
+
+    const finalTimer = window.setTimeout(() => {
+      window.setTimeout(() => setIsLoading(false), 300);
+    }, 1500);
+
+    const onLoad = () => {
+      timers.forEach((t) => window.clearTimeout(t));
+      window.clearTimeout(finalTimer);
+      setLoadingProgress(100);
+      window.setTimeout(() => setIsLoading(false), 300);
+    };
+
+    if (document.readyState === 'complete') {
+      onLoad();
+    } else {
+      window.addEventListener('load', onLoad, { once: true });
+    }
+
+    return () => {
+      timers.forEach((t) => window.clearTimeout(t));
+      window.clearTimeout(finalTimer);
+      window.removeEventListener('load', onLoad);
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setHeroMessageIndex((current) => (current + 1) % heroMessages.length);
+    }, 3000);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isLoading ? 'hidden' : '';
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isLoading]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -372,6 +433,21 @@ export default function Portfolio() {
           end: 'bottom top',
           scrub: true,
         },
+      });
+
+      gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((element) => {
+        const speed = Number(element.dataset.parallax ?? '8');
+
+        gsap.to(element, {
+          yPercent: speed * -1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current ?? element,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
       });
 
       if (focusRef.current) {
@@ -473,6 +549,35 @@ export default function Portfolio() {
 
   return (
     <div ref={rootRef} className="min-h-screen bg-background text-foreground">
+      {isLoading && (
+        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950">
+          <div className="loading-screen flex flex-col items-center gap-6 text-center">
+            <div className="relative h-16 w-16">
+              <div className="absolute inset-0 rounded-full border border-cyan-400/30 bg-white/5" />
+              <div className="absolute inset-2 rounded-full border border-emerald-400/40" />
+              <div className="absolute inset-1 animate-spin rounded-full border-2 border-transparent border-t-cyan-400 border-r-emerald-400" style={{ animationDuration: '2s' }} />
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.5em] text-cyan-300 animate-[fadeIn_0.6s_ease]">
+                Loading portfolio
+              </p>
+              <p className="mt-2 text-sm text-slate-300 animate-[fadeIn_0.8s_ease_0.1s_both]">
+                Crafting a premium full-stack experience
+              </p>
+            </div>
+            <div className="mt-6 w-48">
+              <div className="h-px overflow-hidden rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent">
+                <div
+                  className="h-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-cyan-400 transition-all duration-300 ease-out"
+                  style={{ width: `${loadingProgress}%` }}
+                />
+              </div>
+              <p className="mt-2 text-xs text-slate-400">{Math.round(loadingProgress)}%</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <aside className="fixed inset-y-0 left-0 z-50 hidden w-24 border-r border-white/8 bg-background/70 backdrop-blur-xl xl:flex">
         <div className="flex h-full w-full flex-col items-center justify-between px-4 py-6">
           <Link
@@ -561,15 +666,17 @@ export default function Portfolio() {
               <div>
                 <div className="hero-badge inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2 text-sm text-white/80">
                   <Sparkles size={16} className="text-cyan-300" />
-                  Aspiring full-stack developer
+                  Full-stack developer
                 </div>
 
                 <h1 className="hero-heading mt-6 max-w-4xl text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
-                  I build polished, production-minded digital experiences for teams that value clarity, reliability, and strong execution.
+                  <span key={heroMessageIndex} className="inline-block animate-[fadeIn_0.5s_ease]">
+                    {heroMessages[heroMessageIndex]}
+                  </span>
                 </h1>
 
                 <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-                  I am Pierre Isaiah Aguinaldo, a fourth-year IT student and aspiring full-stack developer. I build modern web and mobile interfaces that are responsive, maintainable, and ready to present in a professional setting.
+                  I am Pierre Isaiah I. Aguinaldo, a full-stack developer and fourth-year IT student. I build modern web and mobile interfaces that are responsive, maintainable, and ready to present in a professional setting.
                 </p>
 
                 <div className="hero-cta mt-8 flex flex-col gap-4 sm:flex-row">
@@ -595,7 +702,7 @@ export default function Portfolio() {
                   </span>
                   <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
                     <Code2 size={14} className="text-emerald-300" />
-                    Full-Stack Developer
+                    Full-stack developer
                   </span>
                 </div>
 
@@ -613,9 +720,9 @@ export default function Portfolio() {
               </div>
 
               <div className="relative mx-auto w-full max-w-md">
-                <div className="hero-parallax absolute inset-0 rounded-[2rem] bg-gradient-to-br from-cyan-400/20 via-sky-400/10 to-emerald-400/20 blur-3xl" />
+                <div data-parallax="10" className="hero-parallax absolute inset-0 rounded-[2rem] bg-gradient-to-br from-cyan-400/20 via-sky-400/10 to-emerald-400/20 blur-3xl" />
                 <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/55 p-4 shadow-[0_30px_120px_rgba(15,23,42,0.45)] backdrop-blur-xl">
-                  <div className="relative h-[500px] overflow-hidden rounded-[1.5rem] border border-white/10">
+                  <div data-parallax="6" className="relative h-[500px] overflow-hidden rounded-[1.5rem] border border-white/10">
                     <Image
                       src="/profile.png"
                       alt="Portrait of Pierre Isaiah Aguinaldo"
@@ -624,13 +731,13 @@ export default function Portfolio() {
                       className="object-cover"
                       style={{ objectPosition: 'center 18%' }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+                    <div data-parallax="2" className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
 
-                    <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-slate-950/60 px-3 py-2 text-xs font-medium text-cyan-100 backdrop-blur-md">
+                    <div data-parallax="4" className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-slate-950/60 px-3 py-2 text-xs font-medium text-cyan-100 backdrop-blur-md">
                       Open to SWE and full-stack opportunities
                     </div>
 
-                    <div className="absolute bottom-4 left-4 right-4 grid gap-3 sm:grid-cols-2">
+                    <div data-parallax="3" className="absolute bottom-4 left-4 right-4 grid gap-3 sm:grid-cols-2">
                       <div className="rounded-2xl border border-white/10 bg-slate-950/70 p-4 backdrop-blur-md">
                         <p className="text-xs uppercase tracking-[0.3em] text-white/45">Focus</p>
                         <p className="mt-2 text-sm font-medium text-white">Clean architecture, sharp UI, practical motion</p>
@@ -651,9 +758,10 @@ export default function Portfolio() {
             ref={focusRef}
             className="relative px-6 py-20 lg:py-28"
           >
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.06),transparent_45%)]" />
             <div className="mx-auto max-w-7xl">
               <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
-                <div>
+                <div data-parallax="8">
                   <p className="focus-kicker text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">
                     Role focus
                   </p>
@@ -694,10 +802,11 @@ export default function Portfolio() {
             </div>
           </section>
 
-          <section id="experience" className="px-6 py-20 lg:py-28">
+          <section id="experience" className="relative px-6 py-20 lg:py-28">
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.04),transparent_40%)]" />
             <div className="mx-auto max-w-7xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-300">Experience</p>
-              <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-300">Experience</p>
+              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
                 Practical experience, academic grounding, and a portfolio built for real hiring conversations.
               </h2>
 
@@ -718,10 +827,11 @@ export default function Portfolio() {
             </div>
           </section>
 
-          <section id="projects" className="px-6 py-20 lg:py-28">
+          <section id="projects" className="relative px-6 py-20 lg:py-28">
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.05),transparent_50%)]" />
             <div className="mx-auto max-w-7xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">Case studies</p>
-              <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">Case studies</p>
+              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
                 Projects presented with the same care I would bring to a real product review.
               </h2>
 
@@ -735,7 +845,7 @@ export default function Portfolio() {
                     }`}
                     onClick={project.title === 'Tomb Navigation & Contract Management' ? openTombProject : undefined}
                   >
-                    <div className="relative h-64 overflow-hidden">
+                    <div data-parallax="5" className="relative h-64 overflow-hidden">
                       <Image
                         src={project.image}
                         alt={project.title}
@@ -843,10 +953,11 @@ export default function Portfolio() {
             </div>
           )}
 
-          <section id="skills" className="px-6 py-20 lg:py-28">
+          <section id="skills" className="relative px-6 py-20 lg:py-28">
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05),transparent_45%)]" />
             <div className="mx-auto max-w-7xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-300">Skills</p>
-              <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-300">Skills</p>
+              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
                 A focused stack that supports modern full-stack and mobile delivery.
               </h2>
 
@@ -896,9 +1007,10 @@ export default function Portfolio() {
             </div>
           </section>
 
-          <section id="contact" className="px-6 py-20 lg:py-28">
+          <section id="contact" className="relative px-6 py-20 lg:py-28">
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_right,rgba(56,189,248,0.06),transparent_45%)]" />
             <div className="mx-auto max-w-5xl">
-              <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/8 via-white/5 to-cyan-400/8 p-8 shadow-[0_30px_120px_rgba(15,23,42,0.35)] sm:p-10 lg:p-12">
+              <div data-parallax="8" className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/8 via-white/5 to-cyan-400/8 p-8 shadow-[0_30px_120px_rgba(15,23,42,0.35)] sm:p-10 lg:p-12">
                 <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">Contact</p>
                 <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
                   Let’s talk about full-time SWE opportunities, internships, or a product idea worth building.
