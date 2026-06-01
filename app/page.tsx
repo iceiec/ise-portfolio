@@ -293,13 +293,15 @@ export default function Portfolio() {
   const [isLoading, setIsLoading] = useState(true);
   const [heroMessageIndex, setHeroMessageIndex] = useState(0);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
     const stages = [
-      { progress: 25, delay: 300 },
-      { progress: 50, delay: 600 },
-      { progress: 77, delay: 900 },
-      { progress: 100, delay: 1200 },
+      { progress: 20, delay: 300 },
+      { progress: 50, delay: 800 },
+      { progress: 78, delay: 1300 },
+      { progress: 99, delay: 1800 },
+      { progress: 100, delay: 2300 },
     ];
 
     const timers = stages.map((stage) =>
@@ -307,26 +309,13 @@ export default function Portfolio() {
     );
 
     const finalTimer = window.setTimeout(() => {
-      window.setTimeout(() => setIsLoading(false), 300);
-    }, 1500);
-
-    const onLoad = () => {
-      timers.forEach((t) => window.clearTimeout(t));
-      window.clearTimeout(finalTimer);
-      setLoadingProgress(100);
-      window.setTimeout(() => setIsLoading(false), 300);
-    };
-
-    if (document.readyState === 'complete') {
-      onLoad();
-    } else {
-      window.addEventListener('load', onLoad, { once: true });
-    }
+      setIsExiting(true);
+      window.setTimeout(() => setIsLoading(false), 600);
+    }, 2800);
 
     return () => {
       timers.forEach((t) => window.clearTimeout(t));
       window.clearTimeout(finalTimer);
-      window.removeEventListener('load', onLoad);
     };
   }, []);
 
@@ -550,7 +539,7 @@ export default function Portfolio() {
   return (
     <div ref={rootRef} className="min-h-screen bg-background text-foreground">
       {isLoading && (
-        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950">
+        <div className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950 transition-opacity duration-600 ease-out ${isExiting ? 'opacity-0' : 'opacity-100'}`}>
           <div className="loading-screen flex flex-col items-center gap-6 text-center">
             <div className="relative h-16 w-16">
               <div className="absolute inset-0 rounded-full border border-cyan-400/30 bg-white/5" />
