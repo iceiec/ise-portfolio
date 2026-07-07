@@ -38,7 +38,7 @@ const heroMessages = [
 const stats = [
   { value: '10+', label: 'Projects delivered' },
   { value: '10+', label: 'Tools and technologies' },
-  { value: '4th', label: 'Year IT student' },
+  
 ];
 
 const roleSummaries = [
@@ -68,7 +68,7 @@ const timeline = [
       'Built responsive web and mobile features with Laravel, Livewire, and Tailwind CSS while collaborating through Agile planning and Git-based reviews.',
   },
   {
-    year: '2022 - Present',
+    year: '2022 - 2026',
     title: 'Bachelor of Science in Information Technology',
     org: 'National University - Bulacan',
     copy:
@@ -76,8 +76,8 @@ const timeline = [
   },
   {
     year: 'Selected work',
-    title: 'Full-stack and mobile projects',
-    org: 'Balai Alegria, FJA, Tomb Navigation',
+    title: 'Full-Stack and mobile projects',
+    org: 'Balai Alegria, FJA, Tomb Navigation, etc.',
     copy:
       'Academic and client-style projects that sharpened my ability to design, ship, and present complete end-to-end experiences.',
   },
@@ -85,11 +85,33 @@ const timeline = [
 
 const projects = [
   {
+  title: 'E-commerce Website (Full-Stack Web Application)',
+  category: 'Company Project',
+  image: '',
+  description:
+  'A full-stack e-commerce application built with Next.js, TypeScript, and Supabase, featuring secure authentication, PayPal integration, role-based access control, and a responsive user experience.',
+  tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS', 'PayPal API'],
+  },
+  {
+   title: 'E-commerce Platform v2',
+  category: 'Company Project',
+  description:
+  'An enhanced version of a full-stack e-commerce platform with additional business features, workflow improvements, and UI refinements built using the same modern technology stack.',
+    tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+  },
+  {
+    title: 'Backend Messaging System',
+    category: 'Company Project',
+    description:
+  'A full-stack backend messaging system built with Next.js and Supabase, featuring secure authentication, real-time communication, and an intuitive admin interface.',
+    tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+  },
+  {
     title: 'Tomb Navigation & Contract Management',
-    category: 'Mobile product case study',
+    category: 'Mobile System',
     image: '/ceme.png',
     description:
-      'A Flutter-based mobile system for cemetery navigation and contract management, designed around clarity, guided workflows, and practical utility.',
+      'A Flutter-based mobile system for cemetery navigation and contract management, designed around clarity, guided workflows, and practical utility. Click to see the case study!',
     tags: ['Flutter', 'Firebase', 'AI Integration', 'Maps API', 'Google Gemini'],
   },
   {
@@ -665,8 +687,13 @@ export default function Portfolio() {
                 </h1>
 
                 <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-                  I am Pierre Isaiah I. Aguinaldo, a full-stack developer and fourth-year IT student. I build modern web and mobile interfaces that are responsive, maintainable, and ready to present in a professional setting.
+                  An aspiring Full-Stack Developer with hands-on experience building web and mobile applications through academic and internship projects. 
                 </p>
+
+                <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
+                  I enjoy creating responsive, scalable, and user-focused solutions while continuously expanding my knowledge of modern technologies and best development practices.
+                </p>
+                  
 
                 <div className="hero-cta mt-8 flex flex-col gap-4 sm:flex-row">
                   <button
@@ -874,12 +901,7 @@ export default function Portfolio() {
                           Open live project
                           <ExternalLink size={16} />
                         </a>
-                      ) : (
-                        <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/65">
-                          Open case study
-                          <ArrowRight size={16} />
-                        </div>
-                      )}
+                      ) : null}
                     </div>
                   </article>
                 ))}
@@ -911,7 +933,7 @@ export default function Portfolio() {
                     Mobile case study with guided navigation and contract management workflows.
                   </h3>
                   <p className="mt-5 text-base leading-7 text-slate-300">
-                    A Flutter mobile app built to help users navigate cemetery spaces and manage contracts with clearer structure, faster access, and a more practical mobile experience.
+                    A Flutter mobile app built to help users navigate cemetery spaces and manage contracts with clearer structure, faster access, and a more practical mobile experience. 
                   </p>
                 </div>
 
