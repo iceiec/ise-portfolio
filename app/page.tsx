@@ -36,7 +36,7 @@ const heroMessages = [
 ];
 
 const stats = [
-  { value: '10+', label: 'Projects delivered' },
+  { value: '6+', label: 'Projects delivered' },
   { value: '10+', label: 'Tools and technologies' },
   
 ];
@@ -65,7 +65,7 @@ const timeline = [
     title: 'Software Engineer Intern',
     org: 'Argon Software Development Service',
     copy:
-      'Built responsive web and mobile features with Laravel, Livewire, and Tailwind CSS while collaborating through Agile planning and Git-based reviews.',
+  'Developed a production-grade full-stack web application from architecture to deployment using React.js, Node.js, Express.js, and Supabase. Built RESTful APIs, designed database schemas, implemented a platform-wide messaging system, and collaborated through Agile development and client coordination.',
   },
   {
     year: '2022 - 2026',
@@ -87,7 +87,7 @@ const projects = [
   {
   title: 'E-commerce Website (Full-Stack Web Application)',
   category: 'Company Project',
-  image: '',
+  image: '/nda.png',
   description:
   'A full-stack e-commerce application built with Next.js, TypeScript, and Supabase, featuring secure authentication, PayPal integration, role-based access control, and a responsive user experience.',
   tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS', 'PayPal API'],
@@ -95,6 +95,7 @@ const projects = [
   {
    title: 'E-commerce Platform v2',
   category: 'Company Project',
+  image: '/nda.png',
   description:
   'An enhanced version of a full-stack e-commerce platform with additional business features, workflow improvements, and UI refinements built using the same modern technology stack.',
     tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS'],
@@ -102,6 +103,7 @@ const projects = [
   {
     title: 'Backend Messaging System',
     category: 'Company Project',
+    image: '/nda.png',
     description:
   'A full-stack backend messaging system built with Next.js and Supabase, featuring secure authentication, real-time communication, and an intuitive admin interface.',
     tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS'],
@@ -156,9 +158,6 @@ const skills = [
       'Next.js',
       'Bootstrap',
       'Tailwind CSS',
-      'Responsive Web Design',
-      'Component-Based Architecture',
-      'UI Development',
     ],
   },
   {
@@ -170,13 +169,12 @@ const skills = [
       'Laravel',
       'FastAPI',
       'RESTful API Development',
-      'Server-Side Development',
     ],
   },
   {
     title: 'Databases / BaaS',
     icon: Database,
-    items: ['Supabase', 'Firebase', 'MySQL', 'PostgreSQL', 'SQL', 'Data Modeling', 'Authentication'],
+    items: ['Supabase', 'Firebase', 'MySQL', 'PostgreSQL'],
   },
   {
     title: 'Security / Authentication',
@@ -186,7 +184,7 @@ const skills = [
   {
     title: 'Tools & Version Control',
     icon: Github,
-    items: ['Git', 'GitHub', 'Trello', 'Vercel', 'npm', 'AI-Assisted Development Tools', 'GitHub Copilot'],
+    items: ['Git', 'GitHub', 'Trello', 'Vercel', 'AI-Assisted Development Tools', 'GitHub Copilot'],
   },
   {
     title: 'Design Tools',
