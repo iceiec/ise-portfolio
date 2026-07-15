@@ -2,7 +2,7 @@ import React from "react"
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { ThemeProvider } from './providers'
+import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -35,10 +35,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${_geist.className} font-sans antialiased`}>
-        <ThemeProvider>
+        <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
           <Analytics />
-        </ThemeProvider>
+        </NextThemesProvider>
       </body>
     </html>
   )
