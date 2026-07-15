@@ -17,33 +17,28 @@ import {
   Sparkles,
   Moon,
   Sun,
+  Menu,
+  X,
 } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const navItems = [
   { id: 'home', label: 'Home' },
-  { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
+  { id: 'experience', label: 'Experience' },
   { id: 'skills', label: 'Skills' },
   { id: 'contact', label: 'Contact' },
 ] as const;
 
 type SectionId = (typeof navItems)[number]['id'];
 
-const heroMessages = [
-  'Open to work as a full-stack developer',
-  'I am Pierre Isaiah I. Aguinaldo',
-  'I am a full-stack developer',
-];
-
 const stats = [
   { value: '6+', label: 'Projects delivered' },
-  { value: '10+', label: 'Tools and technologies' },
-  
+  { value: '10+', label: 'Technologies' },
 ];
-
-
 
 const timeline = [
   {
@@ -51,7 +46,7 @@ const timeline = [
     title: 'Software Engineer Intern',
     org: 'Argon Software Development Service',
     copy:
-  'Developed a production-grade full-stack web application from architecture to deployment using React.js, Node.js, Express.js, and Supabase. Built RESTful APIs, designed database schemas, implemented a platform-wide messaging system, and collaborated through Agile development and client coordination.',
+      'Developed a production-grade full-stack web application from architecture to deployment using React.js, Node.js, Express.js, and Supabase. Built RESTful APIs, designed database schemas, implemented a platform-wide messaging system, and collaborated through Agile development and client coordination.',
   },
   {
     year: '2022 - 2026',
@@ -71,925 +66,557 @@ const timeline = [
 
 const projects = [
   {
-  title: 'E-commerce Website (Full-Stack Web Application)',
-  category: 'Company Project',
-  image: '/nda.png',
-  description:
-  'A full-stack e-commerce application built with Next.js, TypeScript, and Supabase, featuring secure authentication, PayPal integration, role-based access control, and a responsive user experience.',
-  tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS', 'PayPal API'],
+    title: 'E-commerce Website (Full-Stack Web Application)',
+    category: 'Company Project',
+    image: '/nda.png',
+    description:
+      'A full-stack e-commerce application built with Next.js, TypeScript, and Supabase, featuring secure authentication, PayPal integration, role-based access control, and a responsive user experience.',
+    tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS', 'PayPal API'],
+    link: '#',
   },
   {
-   title: 'E-commerce Platform v2',
-  category: 'Company Project',
-  image: '/nda.png',
-  description:
-  'An enhanced version of a full-stack e-commerce platform with additional business features, workflow improvements, and UI refinements built using the same modern technology stack.',
+    title: 'E-commerce Platform v2',
+    category: 'Company Project',
+    image: '/nda.png',
+    description:
+      'An enhanced version of a full-stack e-commerce platform with additional business features, workflow improvements, and UI refinements built using the same modern technology stack.',
     tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+    link: '#',
   },
   {
     title: 'Backend Messaging System',
     category: 'Company Project',
     image: '/nda.png',
     description:
-  'A full-stack backend messaging system built with Next.js and Supabase, featuring secure authentication, real-time communication, and an intuitive admin interface.',
+      'A full-stack backend messaging system built with Next.js and Supabase, featuring secure authentication, real-time communication, and an intuitive admin interface.',
     tags: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+    link: '#',
   },
   {
     title: 'Tomb Navigation & Contract Management',
     category: 'Mobile System',
     image: '/ceme.png',
     description:
-      'A Flutter-based mobile system for cemetery navigation and contract management, designed around clarity, guided workflows, and practical utility. Click to see the case study!',
-    tags: ['Flutter', 'Firebase', 'AI Integration', 'Maps API', 'Google Gemini'],
+      'A Flutter mobile app built to help users navigate cemetery spaces and manage contracts with clearer structure, faster access, and a more practical mobile experience.',
+    tags: ['Flutter', 'Firebase', 'AI Integration', 'Maps API', 'Mobile UX'],
+    link: '#',
   },
   {
-    title: 'Balai Alegria E-Commerce',
-    category: 'Booking platform case study',
+    title: 'Balai Alegria Website',
+    category: 'Web Application',
     image: '/balai.png',
     description:
-      'A resort booking experience with a secure payment flow and a clean interface that makes discovery, booking, and checkout feel straightforward.',
-    tags: ['HTML/CSS', 'Express.JS', 'Node.Js', 'PayMongo API'],
-    link: 'https://balai-orpin.vercel.app/',
+      'A full-stack web application for a cultural center featuring event management, booking system, and community engagement tools.',
+    tags: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind CSS'],
+    link: 'https://balai-alegria.vercel.app',
   },
   {
-    title: 'FJA Basketball Scheduling Web Application',
-    category: 'Dashboard case study',
+    title: 'FJA Management System',
+    category: 'Web Application',
     image: '/fja.png',
     description:
-      'An operations-focused scheduling and reporting system that streamlines workflows, automates monthly reports, and reduces manual coordination.',
-    tags: ['PHP', 'MySQL', 'Bootstrap'],
+      'A comprehensive management system for organizational operations with role-based access control and data visualization.',
+    tags: ['React', 'Supabase', 'TypeScript', 'Tailwind CSS', 'PostgreSQL'],
+    link: '#',
   },
 ] as const;
 
-const skills = [
+const skillCategories = [
   {
-    title: 'Programming Languages',
-    icon: Code2,
-    items: [
-      'JavaScript (ES6+)',
-      'TypeScript',
-      'PHP',
-      'Java',
-      'C#',
-      'Dart',
-      'HTML5',
-      'CSS3',
-    ],
-  },
-  {
-    title: 'Frontend Development',
+    category: 'Frontend',
     icon: Layers3,
-    items: [
-      'React',
-      'Next.js',
-      'Bootstrap',
-      'Tailwind CSS',
-    ],
+    skills: ['React.js', 'Next.js', 'Flutter', 'HTML', 'CSS', 'Bootstrap', 'JavaScript (ES6+)', 'Tailwind CSS'],
+    color: 'from-purple-500 to-pink-500',
   },
   {
-    title: 'Backend Development',
+    category: 'Backend',
     icon: Code2,
-    items: [
-      'Node.js',
-      'Express.js',
-      'Laravel',
-      'FastAPI',
-      'RESTful API Development',
-    ],
+    skills: ['Node.js', 'Express.js', 'PHP', 'RESTful API', 'REST API'],
+    color: 'from-teal-500 to-cyan-500',
   },
   {
-    title: 'Databases / BaaS',
+    category: 'Database & BaaS',
     icon: Database,
-    items: ['Supabase', 'Firebase', 'MySQL', 'PostgreSQL'],
+    skills: ['MySQL', 'MongoDB', 'Supabase', 'Firebase', 'PostgreSQL'],
+    color: 'from-orange-500 to-red-500',
   },
   {
-    title: 'Security / Authentication',
+    category: 'Tools & Workflow',
     icon: Sparkles,
-    items: ['JWT', 'Role-Based Access Control (RBAC)', 'Authentication & Authorization'],
+    skills: ['Git', 'GitHub', 'Trello', 'Agile/Scrum', 'Vercel', 'Adobe Photoshop', 'Canva', 'JWT', 'Authentication & Authorization', 'RBAC'],
+    color: 'from-blue-500 to-purple-500',
   },
-  {
-    title: 'Tools & Version Control',
-    icon: Github,
-    items: ['Git', 'GitHub', 'Trello', 'Vercel', 'AI-Assisted Development Tools', 'GitHub Copilot'],
-  },
-  {
-    title: 'Design Tools',
-    icon: Layers3,
-    items: ['Figma', 'Canva', 'Adobe Photoshop'],
-  },
-] as const;
-
-const skillDescriptions: Record<string, string> = {
-  'JavaScript (ES6+)': 'Modern JavaScript syntax, async/await, and browser APIs.',
-  TypeScript: 'Typed JavaScript for safer large-scale codebases.',
-  Python: 'Scripting, automation, and backend services.',
-  PHP: 'Server-side scripting and Laravel experience.',
-  Java: 'Object-oriented programming and ecosystem basics.',
-  'C#': 'General-purpose language; familiarity with .NET basics.',
-  Dart: 'Flutter mobile development language.',
-  'React.js': 'Component-driven UI, hooks, and state management.',
-  'Next.js': 'Server rendering, routing, and optimized builds.',
-  HTML5: 'Semantic markup and accessibility basics.',
-  CSS3: 'Layout, responsive design, and modern CSS features.',
-  Bootstrap: 'Rapid responsive UI building with components.',
-  'Responsive Web Design': 'Designing layouts that adapt to devices.',
-  'Node.js': 'Server-side JavaScript runtime and ecosystems.',
-  'Express.js': 'Lightweight web servers and REST APIs.',
-  FastAPI: 'High-performance Python APIs with async support.',
-  'RESTful API Development': 'Designing resource-based API endpoints.',
-  MySQL: 'Relational database design and CRUD operations.',
-  Supabase: 'BaaS with auth, real-time, and Postgres under-the-hood.',
-  Firebase: 'Realtime DB, auth, and hosting for quick apps.',
-  PostgreSQL: 'Advanced relational DB features and SQL.',
-  JWT: 'Token-based authentication for stateless APIs.',
-  'Authentication & Authorization': 'Managing access and identity flows.',
-  RBAC: 'Role-based permission modeling.',
-  Git: 'Version control fundamentals and branching.',
-  GitHub: 'Repository hosting, PR workflow, and actions basics.',
-  Trello: 'Task tracking and simple kanban workflows.',
-  'Agile/Scrum': 'Iterative planning, standups, and sprints.',
-  Figma: 'Interface design and collaborative prototyping.',
-  'Adobe Photoshop': 'Image editing and visual polish.',
-  Canva: 'Quick visual assets and marketing graphics.',
-};
-
-const skillEmoji: Record<string, string> = {
-  'JavaScript (ES6+)': '🟨',
-  TypeScript: '🔷',
-  Python: '🐍',
-  PHP: '🐘',
-  Java: '☕',
-  'C#': '♯',
-  Dart: '🎯',
-  'React.js': '⚛️',
-  'Next.js': '➡️',
-  HTML5: '🌐',
-  CSS3: '🎨',
-  Bootstrap: '🅱️',
-  'Responsive Web Design': '📱',
-  'Node.js': '🟩',
-  'Express.js': '🚂',
-  FastAPI: '⚡',
-  'RESTful API Development': '🔗',
-  MySQL: '🐬',
-  Supabase: '🧩',
-  Firebase: '🔥',
-  PostgreSQL: '🐘',
-  JWT: '🔐',
-  'Authentication & Authorization': '🔒',
-  RBAC: '🛡️',
-  Git: '🔧',
-  GitHub: '🐙',
-  Trello: '📋',
-  'Agile/Scrum': '⚙️',
-  Figma: '🎨',
-  'Adobe Photoshop': '🖌️',
-  Canva: '🖼️',
-};
-
-const getSkillIcon = (item: string) => {
-  const key = item.toLowerCase();
-
-  if (key.includes('git')) return <Github size={14} />;
-  if (key.includes('mysql') || key.includes('postgres') || key.includes('firebase') || key.includes('supabase'))
-    return <Database size={14} />;
-  if (key.includes('react') || key.includes('next')) return <Layers3 size={14} />;
-  if (key.includes('node') || key.includes('express')) return <Code2 size={14} />;
-  if (key.includes('jwt') || key.includes('auth')) return <Sparkles size={14} />;
-
-  // JS / TS badge
-  if (key.includes('javascript')) {
-    return (
-      <div className="flex h-5 w-6 items-center justify-center rounded-sm bg-yellow-500 dark:bg-yellow-400 text-xs font-semibold text-slate-900 dark:text-slate-950">JS</div>
-    );
-  }
-
-  if (key.includes('typescript')) {
-    return (
-      <div className="flex h-5 w-6 items-center justify-center rounded-sm bg-sky-500 dark:bg-sky-400 text-xs font-semibold text-white dark:text-slate-950">TS</div>
-    );
-  }
-
-  // fallback: initials badge
-  const initials = item
-    .split(' ')
-    .map((p) => p[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
-
-  // pick color deterministically
-  const colors = ['bg-emerald-500 dark:bg-emerald-400', 'bg-cyan-500 dark:bg-cyan-400', 'bg-amber-500 dark:bg-amber-400', 'bg-sky-500 dark:bg-sky-400', 'bg-pink-500 dark:bg-pink-400'];
-  let hash = 0;
-  for (let i = 0; i < item.length; i++) hash = (hash << 5) - hash + item.charCodeAt(i);
-  const color = colors[Math.abs(hash) % colors.length];
-
-  return <div className={`flex h-5 w-6 items-center justify-center rounded-sm text-xs font-semibold text-white dark:text-slate-950 ${color}`}>{initials}</div>;
-};
-
-const tombMobileScreens = ['/mob1.png', '/mob2.png', '/mob3.png', '/mob4.png', '/mob5.png', '/mob6.png', '/mob7.png', '/mob8.png'];
+];
 
 export default function Portfolio() {
   const { theme, setTheme } = useTheme();
-  const rootRef = useRef<HTMLDivElement | null>(null);
-  const heroRef = useRef<HTMLElement | null>(null);
   const [activeSection, setActiveSection] = useState<SectionId>('home');
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [openProject, setOpenProject] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [heroMessageIndex, setHeroMessageIndex] = useState(0);
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [isExiting, setIsExiting] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
-    const stages = [
-      { progress: 20, delay: 300 },
-      { progress: 50, delay: 800 },
-      { progress: 78, delay: 1300 },
-      { progress: 99, delay: 1800 },
-      { progress: 100, delay: 2300 },
-    ];
+    if (!mounted) return;
 
-    const timers = stages.map((stage) =>
-      window.setTimeout(() => setLoadingProgress(stage.progress), stage.delay)
-    );
-
-    const finalTimer = window.setTimeout(() => {
-      setIsExiting(true);
-      window.setTimeout(() => setIsLoading(false), 600);
-    }, 2800);
-
-    return () => {
-      timers.forEach((t) => window.clearTimeout(t));
-      window.clearTimeout(finalTimer);
-    };
-  }, []);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setHeroMessageIndex((current) => (current + 1) % heroMessages.length);
-    }, 3000);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = isLoading ? 'hidden' : '';
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isLoading]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const doc = document.documentElement;
-      const maxScroll = doc.scrollHeight - window.innerHeight;
-      const progress = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
-      setScrollProgress(progress);
-
-      const currentSection = navItems.find(({ id }) => {
-        const element = document.getElementById(id);
-        if (!element) {
-          return false;
-        }
-
-        const rect = element.getBoundingClientRect();
-        return rect.top <= 180 && rect.bottom >= 180;
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection.id);
+    // Smooth scroll to section
+    const scrollToSection = (id: SectionId) => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
       }
     };
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Update active section on scroll
+    const handleScroll = () => {
+      const sections = navItems.map(item => ({
+        id: item.id,
+        element: document.getElementById(item.id),
+      }));
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.element) {
+          const rect = section.element.getBoundingClientRect();
+          if (rect.top <= window.innerHeight / 3) {
+            setActiveSection(section.id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [mounted]);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    if (!mounted) return;
 
-    if (!rootRef.current) {
-      return;
-    }
-
+    // GSAP animations
     const ctx = gsap.context(() => {
-      gsap.from('.hero-badge', {
-        y: 18,
+      // Hero animations
+      gsap.from('[data-hero-item]', {
         opacity: 0,
+        y: 30,
+        stagger: 0.15,
         duration: 0.8,
         ease: 'power3.out',
       });
 
-      gsap.from('.hero-heading', {
-        y: 28,
-        opacity: 0,
-        duration: 0.9,
-        ease: 'power3.out',
-        delay: 0.1,
-      });
-
-      gsap.from('.hero-copy', {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        delay: 0.2,
-      });
-
-      gsap.from('.hero-cta', {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        delay: 0.25,
-      });
-
-      gsap.from('.hero-stat', {
+      // Project cards animation
+      gsap.from('[data-project-card]', {
         scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top 72%',
+          trigger: '[data-projects-section]',
+          start: 'top 80%',
         },
-        y: 18,
         opacity: 0,
-        duration: 0.7,
+        y: 40,
+        stagger: 0.1,
+        duration: 0.6,
+        ease: 'power2.out',
+      });
+
+      // Skills cards animation
+      gsap.from('[data-skill-card]', {
+        scrollTrigger: {
+          trigger: '[data-skills-section]',
+          start: 'top 80%',
+        },
+        opacity: 0,
+        scale: 0.95,
         stagger: 0.08,
+        duration: 0.6,
+        ease: 'back.out',
+      });
+
+      // Timeline items animation
+      gsap.from('[data-timeline-item]', {
+        scrollTrigger: {
+          trigger: '[data-experience-section]',
+          start: 'top 80%',
+        },
+        opacity: 0,
+        x: -40,
+        stagger: 0.15,
+        duration: 0.6,
         ease: 'power2.out',
       });
-
-      gsap.to('.hero-parallax', {
-        yPercent: -12,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-
-      gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((element) => {
-        const speed = Number(element.dataset.parallax ?? '8');
-
-        gsap.to(element, {
-          yPercent: speed * -1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: heroRef.current ?? element,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-          },
-        });
-      });
-
-      gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
-        gsap.fromTo(
-          element,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.85,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: element,
-              start: 'top 82%',
-            },
-          }
-        );
-      });
-
-      gsap.utils.toArray<HTMLElement>('[data-project]').forEach((element) => {
-        gsap.fromTo(
-          element,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: element,
-              start: 'top 84%',
-            },
-          }
-        );
-      });
-    }, rootRef);
+    });
 
     return () => ctx.revert();
-  }, []);
+  }, [mounted]);
 
+  const filteredProjects = selectedFilter
+    ? projects.filter(p => p.tags.includes(selectedFilter))
+    : projects;
 
-  const scrollToSection = (sectionId: SectionId) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  const openTombProject = () => {
-    setOpenProject('tomb');
-  };
-
-  const closeProject = () => {
-    setOpenProject(null);
-  };
+  const allTags = Array.from(new Set(projects.flatMap(p => p.tags)));
 
   return (
-    <div ref={rootRef} className="min-h-screen bg-background text-foreground">
-      {isLoading && (
-        <div className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background transition-opacity duration-600 ease-out ${isExiting ? 'opacity-0' : 'opacity-100'}`}>
-          <div className="loading-screen flex flex-col items-center gap-6 text-center">
-            <div className="relative h-16 w-16">
-              <div className="absolute inset-0 rounded-full border border-primary/30 bg-foreground/5" />
-              <div className="absolute inset-2 rounded-full border border-secondary/40" />
-              <div className="absolute inset-1 animate-spin rounded-full border-2 border-transparent border-t-primary border-r-secondary" style={{ animationDuration: '2s' }} />
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.5em] text-primary animate-[fadeIn_0.6s_ease]">
-                Initializing portfolio
-              </p>
-              <p className="mt-2 text-sm text-foreground/60 animate-[fadeIn_0.8s_ease_0.1s_both]">
-                Building a premium experience
-              </p>
-            </div>
-            <div className="mt-6 w-48">
-              <div className="h-px overflow-hidden rounded-full bg-gradient-to-r from-transparent via-foreground/20 to-transparent">
-                <div
-                  className="h-full bg-gradient-to-r from-primary via-secondary to-accent transition-all duration-300 ease-out"
-                  style={{ width: `${loadingProgress}%` }}
-                />
-              </div>
-              <p className="mt-2 text-xs text-foreground/50">{Math.round(loadingProgress)}%</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <aside className="fixed inset-y-0 left-0 z-50 hidden w-24 border-r border-border bg-background/50 backdrop-blur-xl xl:flex">
-        <div className="flex h-full w-full flex-col items-center justify-between px-4 py-6">
-          <Link
-            href="#home"
-            className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-sm font-semibold tracking-[0.3em] text-foreground hover:bg-muted transition-colors"
-          >
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl transition-all">
+        <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+          <Link href="#home" className="font-bold text-xl text-primary hover:opacity-80 transition-opacity">
             PI
           </Link>
 
-          <div className="flex flex-1 items-center py-8">
-            <div className="relative h-full w-px rounded-full bg-border">
-              <div
-                className="absolute left-0 top-0 w-px rounded-full bg-gradient-to-b from-primary via-secondary to-accent"
-                style={{ height: `${scrollProgress}%` }}
-              />
-            </div>
-          </div>
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  setActiveSection(item.id);
+                  document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeSection === item.id
+                    ? 'bg-primary/15 text-primary'
+                    : 'text-foreground/60 hover:text-foreground hover:bg-muted/50'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
 
-          <div className="flex flex-col gap-4 text-foreground/60">
-            <a href="https://github.com/iceiec" target="_blank" rel="noreferrer" aria-label="GitHub" className="hover:text-primary transition-colors">
-              <Github size={18} />
-            </a>
-            <a
-              href="https://linkedin.com/in/isaiahaguinaldo"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="hover:text-primary transition-colors"
-            >
-              <Linkedin size={18} />
-            </a>
-            <a href="mailto:isaiah.aguinaldo2@gmail.com" aria-label="Email">
-              <Mail size={18} />
-            </a>
-          </div>
-        </div>
-      </aside>
-
-      <div className="xl:pl-24">
-        <header className="sticky top-0 z-40 border-b border-border bg-background/50 backdrop-blur-xl">
-          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
-            <Link href="#home" className="text-lg font-semibold tracking-tight text-foreground hover:text-primary transition-colors">
-              Pierre Isaiah
-            </Link>
-
-            <nav className="hidden items-center gap-1 rounded-full border border-border bg-card p-1 lg:flex">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`rounded-full px-4 py-2 text-sm transition ${
-                    activeSection === item.id
-                      ? 'bg-primary/15 text-primary font-medium'
-                      : 'text-foreground/60 hover:bg-muted hover:text-foreground'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-
+          {/* Theme Toggle & Mobile Menu */}
+          <div className="flex items-center gap-3">
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card hover:bg-muted transition-colors text-foreground"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card hover:bg-muted transition-colors"
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
             )}
 
-            <a
-              href="/PierreIsaiahAguinaldo_Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              aria-hidden="true"
-              tabIndex={-1}
-              className="hidden"
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card hover:bg-muted transition-colors"
+              aria-label="Toggle menu"
             >
-              Resume
-              <ArrowRight size={16} />
-            </a>
+              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
           </div>
-        </header>
+        </div>
 
-        <main>
-          <section
-            id="home"
-            ref={heroRef}
-            className="relative overflow-hidden px-6 pb-24 pt-20 sm:pt-24 lg:pb-32 lg:pt-28"
-          >
-            <div className="absolute inset-0 -z-10 opacity-dark:40 opacity-light:20 bg-[radial-gradient(circle_at_top_left,var(--tw-gradient-stops))] dark:from-primary/15 dark:via-background dark:to-background from-primary/8 via-background to-background" />
-            <div className="hero-parallax absolute -right-24 top-8 h-72 w-72 rounded-full bg-primary/15 dark:bg-primary/10 blur-3xl" />
-            <div className="hero-parallax absolute left-[-5rem] top-48 h-96 w-96 rounded-full bg-secondary/10 dark:bg-secondary/8 blur-3xl" />
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-border/50 bg-background/95 px-6 py-4">
+            <nav className="flex flex-col gap-2">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveSection(item.id);
+                    document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all text-left ${
+                    activeSection === item.id
+                      ? 'bg-primary/15 text-primary'
+                      : 'text-foreground/60 hover:text-foreground hover:bg-muted/50'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+        )}
+      </header>
 
-            <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.12fr_0.88fr] lg:gap-12">
-              <div>
-                <div className="hero-badge inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground/80">
-                  <Sparkles size={16} className="text-primary" />
-                  Full-stack developer
-                </div>
-
-                <h1 className="hero-heading mt-6 max-w-4xl text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-                  <span key={heroMessageIndex} className="inline-block animate-[fadeIn_0.5s_ease]">
-                    {heroMessages[heroMessageIndex]}
+      {/* Main Content */}
+      <main className="mx-auto max-w-7xl px-6 py-12 md:py-20 space-y-20 md:space-y-32">
+        {/* Hero Section */}
+        <section id="home" className="relative py-12 md:py-20">
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(124,58,237,0.1),rgba(255,255,255,0))]" />
+          
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="space-y-8">
+              <div data-hero-item className="space-y-4">
+                <p className="text-primary font-semibold text-sm uppercase tracking-wider">Full-Stack Developer</p>
+                <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+                  <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                    Build Fast.
                   </span>
+                  <span className="block mt-2">Ship Quality.</span>
                 </h1>
-
-                <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-foreground/70 sm:text-xl">
-                  Full-Stack Developer focused on building production-grade applications with clean architecture, polished UX, and seamless performance. I transform business requirements into robust web and mobile solutions.
-                </p>
-
-                <p className="hero-copy mt-4 max-w-2xl text-base leading-7 text-foreground/60">
-                  React.js, Next.js, Node.js, TypeScript, Supabase, Firebase — built 6+ projects from concept to deployment.
-                </p>
-                  
-
-                <div className="hero-cta mt-8 flex flex-col gap-4 sm:flex-row">
-                  <button
-                    onClick={() => scrollToSection('projects')}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold transition hover:bg-primary/90 shadow-lg hover:shadow-primary/25"
-                  >
-                    View selected work
-                    <ArrowRight size={16} />
-                  </button>
-                  <button
-                    onClick={() => scrollToSection('contact')}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-muted"
-                  >
-                    Start a conversation
-                  </button>
-                </div>
-
-                <div className="mt-10 flex flex-wrap items-center gap-4 text-sm text-foreground/70">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
-                    <MapPin size={14} className="text-primary" />
-                    Philippines
-                  </span>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
-                    <Code2 size={14} className="text-secondary" />
-                    Full-stack developer
-                  </span>
-                </div>
-
-                <div className="mt-12 grid gap-4 sm:grid-cols-3">
-                  {stats.map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="hero-stat rounded-2xl border border-border bg-card p-5 shadow-lg dark:shadow-black/50 light:shadow-black/5 hover:border-primary/50 transition-all"
-                    >
-                      <div className="text-3xl font-semibold text-foreground">{stat.value}</div>
-                      <p className="mt-2 text-sm leading-6 text-foreground/60">{stat.label}</p>
-                    </div>
-                  ))}
-                </div>
               </div>
 
-              <div className="relative mx-auto w-full max-w-md">
-                <div data-parallax="10" className="hero-parallax absolute inset-0 rounded-[2rem] bg-gradient-to-br from-primary/20 dark:from-primary/15 via-secondary/10 dark:via-secondary/8 to-accent/20 dark:to-accent/15 blur-3xl" />
-                <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card/50 dark:bg-card/30 p-4 shadow-2xl dark:shadow-black/50 light:shadow-black/10 backdrop-blur-xl">
-                  <div data-parallax="6" className="relative h-[500px] overflow-hidden rounded-[1.5rem] border border-border">
-                    <Image
-                      src="/profile.png"
-                      alt="Portrait of Pierre Isaiah Aguinaldo"
-                      fill
-                      priority
-                      className="object-cover"
-                      style={{ objectPosition: 'center 18%' }}
-                    />
-                    <div data-parallax="2" className="absolute inset-0 bg-gradient-to-t dark:from-background via-background/30 dark:via-background/20 to-transparent from-card via-card/20" />
+              <div data-hero-item className="space-y-4">
+                <p className="text-lg text-foreground/70 leading-relaxed">
+                  I transform ideas into production-ready applications. From concept to deployment, I bring technical excellence and creative problem-solving to every project.
+                </p>
+                <p className="text-sm text-foreground/60">
+                  React • Next.js • Node.js • TypeScript • Supabase • Firebase
+                </p>
+              </div>
 
-                    <div data-parallax="4" className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-primary/30 dark:border-primary/20 bg-background/60 dark:bg-background/70 px-3 py-2 text-xs font-medium text-primary dark:text-primary/90 backdrop-blur-md">
-                      Open to SWE and full-stack opportunities
-                    </div>
+              <div data-hero-item className="flex flex-wrap gap-4">
+                <button
+                  onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25"
+                >
+                  View My Work
+                </button>
+                <a
+                  href="mailto:isaiah.aguinaldo2@gmail.com"
+                  className="px-6 py-3 border border-border bg-card rounded-lg font-semibold hover:bg-muted transition-all"
+                >
+                  Get In Touch
+                </a>
+              </div>
 
-                    <div data-parallax="3" className="absolute bottom-4 left-4 right-4 grid gap-3 sm:grid-cols-2">
-                      <div className="rounded-2xl border border-border bg-background/70 dark:bg-background/60 p-4 backdrop-blur-md">
-                        <p className="text-xs uppercase tracking-[0.3em] text-foreground/50">Focus</p>
-                        <p className="mt-2 text-sm font-medium text-foreground">Clean architecture, sharp UI, practical motion</p>
-                      </div>
-                      <div className="rounded-2xl border border-border bg-background/70 dark:bg-background/60 p-4 backdrop-blur-md">
-                        <p className="text-xs uppercase tracking-[0.3em] text-foreground/50">Goal</p>
-                        <p className="mt-2 text-sm font-medium text-foreground">Join a team building useful, modern products</p>
-                      </div>
-                    </div>
+              <div data-hero-item className="grid grid-cols-2 gap-4 pt-4">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="p-4 rounded-lg bg-card border border-border/50">
+                    <div className="text-2xl font-bold text-primary">{stat.value}</div>
+                    <p className="text-sm text-foreground/60">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Visual */}
+            <div data-hero-item className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/10 rounded-3xl blur-3xl" />
+              <div className="relative rounded-3xl overflow-hidden border border-border/50 shadow-2xl">
+                <Image
+                  src="/profile.png"
+                  alt="Pierre Isaiah Aguinaldo"
+                  width={500}
+                  height={600}
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section id="projects" className="space-y-12" data-projects-section>
+          <div className="text-center space-y-4">
+            <p className="text-primary font-semibold text-sm uppercase tracking-wider">Portfolio</p>
+            <h2 className="text-4xl md:text-5xl font-bold">Featured Projects</h2>
+            <p className="text-foreground/60 max-w-2xl mx-auto">
+              A selection of projects that showcase my ability to build scalable, user-focused applications from start to finish.
+            </p>
+          </div>
+
+          {/* Filter Tags */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            <button
+              onClick={() => setSelectedFilter(null)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                selectedFilter === null
+                  ? 'bg-primary text-primary-foreground'
+                  : 'border border-border bg-card hover:bg-muted'
+              }`}
+            >
+              All
+            </button>
+            {allTags.slice(0, 8).map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setSelectedFilter(selectedFilter === tag ? null : tag)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  selectedFilter === tag
+                    ? 'bg-primary text-primary-foreground'
+                    : 'border border-border bg-card hover:bg-muted'
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+
+          {/* Project Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProjects.map((project) => (
+              <div
+                key={project.title}
+                data-project-card
+                className="group rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    width={400}
+                    height={300}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
+                  <div className="absolute top-3 right-3">
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/20 text-primary border border-primary/30">
+                      {project.category}
+                    </span>
                   </div>
                 </div>
+
+                <div className="p-6 space-y-4">
+                  <div>
+                    <h3 className="text-lg font-bold group-hover:text-primary transition-colors">{project.title}</h3>
+                    <p className="text-sm text-foreground/60 mt-2">{project.description}</p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span key={tag} className="px-2 py-1 rounded-full text-xs bg-muted border border-border/50 text-foreground/70">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {project.link !== '#' && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
+                    >
+                      View Project
+                      <ExternalLink size={16} />
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
-          </section>
+            ))}
+          </div>
+        </section>
 
-          <section id="experience" className="relative px-6 py-20 lg:py-28">
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,var(--color-secondary)/0.04,transparent_40%)]" />
-            <div className="mx-auto max-w-7xl">
-              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-secondary">Experience</p>
-              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                Practical experience, academic grounding, and a portfolio built for real hiring conversations.
-              </h2>
+        {/* Experience Section */}
+        <section id="experience" className="space-y-12" data-experience-section>
+          <div className="text-center space-y-4">
+            <p className="text-primary font-semibold text-sm uppercase tracking-wider">Journey</p>
+            <h2 className="text-4xl md:text-5xl font-bold">Experience & Education</h2>
+          </div>
 
-              <div className="mt-12 grid gap-5 lg:grid-cols-3">
-                {timeline.map((item) => (
-                  <article
-                    key={item.title}
-                    data-reveal
-                    className="rounded-[1.75rem] border border-border bg-card p-6 shadow-lg dark:shadow-black/50 light:shadow-black/5 hover:border-secondary/50 transition-all"
-                  >
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">{item.year}</p>
-                    <h3 className="mt-4 text-2xl font-semibold text-foreground">{item.title}</h3>
-                    <p className="mt-2 text-sm font-medium text-foreground/70">{item.org}</p>
-                    <p className="mt-4 leading-7 text-foreground/70">{item.copy}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section id="projects" className="relative px-6 py-20 lg:py-28">
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_left,var(--color-primary)/0.05,transparent_50%)]" />
-            <div className="mx-auto max-w-7xl">
-              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-primary">Case studies</p>
-              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                Projects presented with the same care I would bring to a real product review.
-              </h2>
-
-              <div className="mt-12 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-                {projects.map((project) => (
-                  <article
-                    key={project.title}
-                    data-project
-                    className={`group overflow-hidden rounded-[1.9rem] border border-border bg-card shadow-lg dark:shadow-black/50 light:shadow-black/5 transition duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-xl dark:hover:shadow-primary/10 light:hover:shadow-primary/20 ${
-                      project.title === 'Tomb Navigation & Contract Management' ? 'cursor-pointer' : ''
-                    }`}
-                    onClick={project.title === 'Tomb Navigation & Contract Management' ? openTombProject : undefined}
-                  >
-                    <div data-parallax="5" className="relative h-64 overflow-hidden">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover transition duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t dark:from-background dark:via-background/20 from-card via-card/20 to-transparent" />
-                      <div className="absolute left-4 top-4 rounded-full border border-border bg-background/65 dark:bg-background/70 px-3 py-2 text-xs font-medium text-foreground/80 backdrop-blur-md">
-                        {project.category}
-                      </div>
-                    </div>
-
-                    <div className="p-6">
-                      <h3 className="text-2xl font-semibold text-foreground transition group-hover:text-primary">
-                        {project.title}
-                      </h3>
-                      <p className="mt-4 leading-7 text-foreground/70">{project.description}</p>
-
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-foreground/70 hover:border-primary/50 transition-colors"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      {project.link ? (
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:text-primary/80"
-                        >
-                          Open live project
-                          <ExternalLink size={16} />
-                        </a>
-                      ) : null}
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {openProject === 'tomb' && (
-            <div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/80 px-4 py-8 backdrop-blur-sm"
-              onClick={closeProject}
-            >
+          <div className="space-y-6">
+            {timeline.map((item, index) => (
               <div
-                className="relative max-h-[92vh] w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-border bg-card p-6 shadow-2xl dark:shadow-black/50 light:shadow-black/10 sm:p-8"
-                onClick={(event) => event.stopPropagation()}
+                key={item.title}
+                data-timeline-item
+                className="group relative pl-8 md:pl-12"
               >
-                <button
-                  type="button"
-                  onClick={closeProject}
-                  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-muted hover:bg-muted/80 text-foreground transition"
-                  aria-label="Close project modal"
-                >
-                  ×
-                </button>
+                {/* Timeline dot */}
+                <div className="absolute left-0 top-0 w-4 h-4 rounded-full bg-primary border-4 border-background md:w-6 md:h-6" />
+                {/* Timeline line */}
+                {index !== timeline.length - 1 && (
+                  <div className="absolute left-[7px] top-8 w-0.5 h-24 bg-gradient-to-b from-primary to-primary/0 md:left-[11px]" />
+                )}
 
-                <div className="max-w-3xl pr-12">
-                  <p className="text-xs font-semibold uppercase tracking-[0.4em] text-primary">Tomb Navigation & Contract Management</p>
-                  <h3 className="mt-4 text-3xl font-semibold text-foreground sm:text-4xl">
-                    Mobile case study with guided navigation and contract management workflows.
-                  </h3>
-                  <p className="mt-5 text-base leading-7 text-foreground/70">
-                    A Flutter mobile app built to help users navigate cemetery spaces and manage contracts with clearer structure, faster access, and a more practical mobile experience. 
-                  </p>
-                </div>
-
-                <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                  {tombMobileScreens.map((screen, index) => (
-                    <div
-                      key={screen}
-                      className="relative aspect-[9/16] overflow-hidden rounded-[1.5rem] border border-border bg-muted"
-                    >
-                      <Image
-                        src={screen}
-                        alt={`Tomb Navigation mobile screenshot ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
+                <div className="p-6 rounded-lg border border-border/50 bg-card hover:border-primary/50 transition-all">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-2">
+                    <div>
+                      <h3 className="text-lg font-bold">{item.title}</h3>
+                      <p className="text-primary font-semibold text-sm">{item.org}</p>
                     </div>
-                  ))}
-                </div>
-
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {['Flutter', 'Firebase', 'AI Integration', 'Maps API', 'Mobile UX'].map((tag) => (
-                    <span key={tag} className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-foreground/70">
-                      {tag}
-                    </span>
-                  ))}
+                    <span className="text-xs font-semibold text-foreground/60 uppercase tracking-wider">{item.year}</span>
+                  </div>
+                  <p className="text-foreground/70 leading-relaxed">{item.copy}</p>
                 </div>
               </div>
-            </div>
-          )}
+            ))}
+          </div>
+        </section>
 
-          <section id="skills" className="relative px-6 py-20 lg:py-28">
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,var(--color-secondary)/0.05,transparent_45%)]" />
-            <div className="mx-auto max-w-7xl">
-              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-secondary">Skills</p>
-              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                A focused stack that supports modern full-stack and mobile delivery.
-              </h2>
+        {/* Skills Section */}
+        <section id="skills" className="space-y-12" data-skills-section>
+          <div className="text-center space-y-4">
+            <p className="text-primary font-semibold text-sm uppercase tracking-wider">Skills</p>
+            <h2 className="text-4xl md:text-5xl font-bold">Technical Expertise</h2>
+          </div>
 
-              <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                {skills.map((group) => {
-                  const Icon = group.icon;
+          <div className="grid md:grid-cols-2 gap-6">
+            {skillCategories.map((category) => {
+              const Icon = category.icon;
+              return (
+                <div
+                  key={category.category}
+                  data-skill-card
+                  className="group p-6 md:p-8 rounded-2xl border border-border/50 bg-card hover:border-primary/50 transition-all"
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className={`p-3 rounded-lg bg-gradient-to-br ${category.color} text-white`}>
+                      <Icon size={24} />
+                    </div>
+                    <h3 className="text-xl font-bold">{category.category}</h3>
+                  </div>
 
-                  return (
-                    <article
-                      key={group.title}
-                      data-reveal
-                      className="rounded-[1.75rem] border border-border bg-card p-6 shadow-lg dark:shadow-black/50 light:shadow-black/5 hover:border-secondary/50 transition-all"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-muted/50 text-primary">
-                          <Icon size={20} />
-                        </div>
-                        <h3 className="text-xl font-semibold text-foreground">{group.title}</h3>
-                      </div>
-
-                      <div className="mt-6 space-y-3">
-                        {group.items.map((item) => (
-                          <div
-                            key={item}
-                            className="group relative flex items-center justify-between rounded-2xl border border-border bg-muted/30 px-4 py-3 text-sm text-foreground/70 transition-transform hover:translate-x-1 hover:scale-[1.01] hover:bg-muted/60 hover:text-foreground"
-                          >
-                            <div className="flex items-center gap-3">
-                              <span className="flex items-center justify-center">{getSkillIcon(item)}</span>
-                              <span>{item}</span>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                              <span className="h-2 w-2 rounded-full bg-primary transition-transform group-hover:scale-110" />
-                              <ArrowRight size={14} className="opacity-0 transition-opacity group-hover:opacity-100" />
-                            </div>
-
-                            <div className="pointer-events-none absolute -top-12 left-4 z-50 hidden w-max rounded-md bg-background/90 dark:bg-background/95 px-3 py-1 text-xs text-foreground shadow transition-all group-hover:block group-hover:opacity-100">
-                              {skillDescriptions[item] ?? ''}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-
-          <section id="contact" className="relative px-6 py-20 lg:py-28">
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_right,var(--color-primary)/0.06,transparent_45%)]" />
-            <div className="mx-auto max-w-5xl">
-              <div data-parallax="8" className="rounded-[2rem] border border-border bg-gradient-to-br dark:from-card dark:via-card/80 light:from-card light:via-background to-primary/10 p-8 shadow-xl dark:shadow-black/50 light:shadow-black/10 sm:p-10 lg:p-12">
-                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-primary">Contact</p>
-                <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                  Let's talk about full-time SWE opportunities, internships, or a product idea worth building.
-                </h2>
-                <p className="mt-6 max-w-2xl text-lg leading-8 text-foreground/70">
-                  I'm looking for a team where I can contribute, learn fast, and keep building polished experiences that feel credible from day one.
-                </p>
-
-                <div className="mt-10 grid gap-4 md:grid-cols-3">
-                  <a
-                    href="mailto:isaiah.aguinaldo2@gmail.com"
-                    className="rounded-[1.5rem] border border-border bg-muted/50 p-5 transition hover:border-primary/50 hover:bg-muted/80 hover:shadow-lg"
-                  >
-                    <Mail className="text-primary" size={28} />
-                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-foreground/50">Email</p>
-                    <p className="mt-2 text-sm font-medium text-foreground">isaiah.aguinaldo2@gmail.com</p>
-                  </a>
-
-                  <a
-                    href="https://linkedin.com/in/isaiahaguinaldo"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-[1.5rem] border border-border bg-muted/50 p-5 transition hover:border-primary/50 hover:bg-muted/80 hover:shadow-lg"
-                  >
-                    <Linkedin className="text-primary" size={28} />
-                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-foreground/50">LinkedIn</p>
-                    <p className="mt-2 text-sm font-medium text-foreground">Isaiah Aguinaldo</p>
-                  </a>
-
-                  <a
-                    href="https://github.com/iceiec"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-[1.5rem] border border-border bg-muted/50 p-5 transition hover:border-primary/50 hover:bg-muted/80 hover:shadow-lg"
-                  >
-                    <Github className="text-primary" size={28} />
-                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-foreground/50">GitHub</p>
-                    <p className="mt-2 text-sm font-medium text-foreground">View my repositories</p>
-                  </a>
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1 rounded-full text-sm bg-muted border border-border/50 text-foreground/70 hover:border-primary/50 hover:text-foreground transition-all cursor-default"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+              );
+            })}
+          </div>
+        </section>
 
-                <div className="mt-8 flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-sm text-foreground/60">Available for internships, junior SWE roles, and freelance collaborations.</p>
-                  <button
-                    onClick={() => scrollToSection('home')}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-3 text-sm font-semibold transition hover:bg-primary/90 shadow-lg hover:shadow-primary/25"
-                  >
-                    Back to top
-                    <ArrowRight size={16} />
-                  </button>
-                </div>
-              </div>
+        {/* Contact Section */}
+        <section id="contact" className="py-12 md:py-20">
+          <div className="rounded-3xl border border-border/50 bg-gradient-to-br from-card via-card to-muted p-8 md:p-16 text-center space-y-8">
+            <div className="space-y-4">
+              <p className="text-primary font-semibold text-sm uppercase tracking-wider">Get In Touch</p>
+              <h2 className="text-4xl md:text-5xl font-bold">Let's Build Something Great</h2>
+              <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+                I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hello, feel free to reach out.
+              </p>
             </div>
-          </section>
 
-          <footer className="border-t border-border px-6 py-8">
-            <div className="mx-auto flex max-w-7xl flex-col gap-3 text-sm text-foreground/60 sm:flex-row sm:items-center sm:justify-between">
-              <p>© {new Date().getFullYear()} Pierre Isaiah Aguinaldo. All rights reserved.</p>
-              <p>Designed with React, Next.js, and GSAP.</p>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+              <a
+                href="mailto:isaiah.aguinaldo2@gmail.com"
+                className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all"
+              >
+                <Mail size={18} />
+                Send Email
+              </a>
+              <a
+                href="https://linkedin.com/in/isaiahaguinaldo"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 px-6 py-3 border border-border bg-card rounded-lg font-semibold hover:bg-muted transition-all"
+              >
+                <Linkedin size={18} />
+                LinkedIn
+              </a>
+              <a
+                href="https://github.com/iceiec"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 px-6 py-3 border border-border bg-card rounded-lg font-semibold hover:bg-muted transition-all"
+              >
+                <Github size={18} />
+                GitHub
+              </a>
             </div>
-          </footer>
-        </main>
-      </div>
+
+            <div className="pt-4 border-t border-border/50">
+              <p className="text-sm text-foreground/60">
+                © {new Date().getFullYear()} Pierre Isaiah Aguinaldo. Available for freelance and full-time opportunities.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
