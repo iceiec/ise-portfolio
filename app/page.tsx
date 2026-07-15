@@ -450,52 +450,6 @@ export default function Portfolio() {
         });
       });
 
-      if (focusRef.current) {
-        const focusCards = gsap.utils.toArray<HTMLElement>('[data-focus-card]');
-
-        const focusTimeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: focusRef.current,
-            start: 'top top',
-            end: '+=120%',
-            pin: true,
-            scrub: 1,
-          },
-        });
-
-        focusTimeline
-          .fromTo(
-            '.focus-kicker',
-            { opacity: 0, y: 24 },
-            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
-          )
-          .fromTo(
-            '.focus-heading',
-            { opacity: 0, y: 28 },
-            { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
-            '<0.05'
-          )
-          .fromTo(
-            focusCards,
-            { opacity: 0, y: 40, scale: 0.96 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              stagger: 0.16,
-              duration: 0.7,
-              ease: 'power2.out',
-            },
-            '<0.12'
-          )
-          .fromTo(
-            '.focus-side-line',
-            { scaleX: 0 },
-            { scaleX: 1, transformOrigin: 'left center', duration: 0.5, ease: 'power2.out' },
-            '<'
-          );
-      }
-
       gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
         gsap.fromTo(
           element,
