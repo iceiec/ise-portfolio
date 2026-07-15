@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${_geist.className} font-sans antialiased`}>
-        <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem>
+        <NextThemesProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
           <Analytics />
         </NextThemesProvider>
