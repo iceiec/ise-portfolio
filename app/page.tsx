@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { useTheme } from 'next-themes';
 import {
   ArrowRight,
   Code2,
@@ -14,6 +15,8 @@ import {
   Mail,
   MapPin,
   Sparkles,
+  Moon,
+  Sun,
 } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -274,13 +277,13 @@ const getSkillIcon = (item: string) => {
   // JS / TS badge
   if (key.includes('javascript')) {
     return (
-      <div className="flex h-5 w-6 items-center justify-center rounded-sm bg-yellow-400 text-xs font-semibold text-slate-900">JS</div>
+      <div className="flex h-5 w-6 items-center justify-center rounded-sm bg-yellow-500 dark:bg-yellow-400 text-xs font-semibold text-slate-900 dark:text-slate-950">JS</div>
     );
   }
 
   if (key.includes('typescript')) {
     return (
-      <div className="flex h-5 w-6 items-center justify-center rounded-sm bg-sky-400 text-xs font-semibold text-slate-900">TS</div>
+      <div className="flex h-5 w-6 items-center justify-center rounded-sm bg-sky-500 dark:bg-sky-400 text-xs font-semibold text-white dark:text-slate-950">TS</div>
     );
   }
 
@@ -293,17 +296,18 @@ const getSkillIcon = (item: string) => {
     .toUpperCase();
 
   // pick color deterministically
-  const colors = ['bg-emerald-400', 'bg-cyan-400', 'bg-amber-400', 'bg-sky-400', 'bg-pink-400'];
+  const colors = ['bg-emerald-500 dark:bg-emerald-400', 'bg-cyan-500 dark:bg-cyan-400', 'bg-amber-500 dark:bg-amber-400', 'bg-sky-500 dark:bg-sky-400', 'bg-pink-500 dark:bg-pink-400'];
   let hash = 0;
   for (let i = 0; i < item.length; i++) hash = (hash << 5) - hash + item.charCodeAt(i);
   const color = colors[Math.abs(hash) % colors.length];
 
-  return <div className={`flex h-5 w-6 items-center justify-center rounded-sm text-xs font-semibold text-slate-900 ${color}`}>{initials}</div>;
+  return <div className={`flex h-5 w-6 items-center justify-center rounded-sm text-xs font-semibold text-white dark:text-slate-950 ${color}`}>{initials}</div>;
 };
 
 const tombMobileScreens = ['/mob1.png', '/mob2.png', '/mob3.png', '/mob4.png', '/mob5.png', '/mob6.png', '/mob7.png', '/mob8.png'];
 
 export default function Portfolio() {
+  const { theme, setTheme } = useTheme();
   const rootRef = useRef<HTMLDivElement | null>(null);
   const heroRef = useRef<HTMLElement | null>(null);
   const focusRef = useRef<HTMLElement | null>(null);
@@ -314,6 +318,11 @@ export default function Portfolio() {
   const [heroMessageIndex, setHeroMessageIndex] = useState(0);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const stages = [
@@ -559,54 +568,54 @@ export default function Portfolio() {
   return (
     <div ref={rootRef} className="min-h-screen bg-background text-foreground">
       {isLoading && (
-        <div className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950 transition-opacity duration-600 ease-out ${isExiting ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background transition-opacity duration-600 ease-out ${isExiting ? 'opacity-0' : 'opacity-100'}`}>
           <div className="loading-screen flex flex-col items-center gap-6 text-center">
             <div className="relative h-16 w-16">
-              <div className="absolute inset-0 rounded-full border border-cyan-400/30 bg-white/5" />
-              <div className="absolute inset-2 rounded-full border border-emerald-400/40" />
-              <div className="absolute inset-1 animate-spin rounded-full border-2 border-transparent border-t-cyan-400 border-r-emerald-400" style={{ animationDuration: '2s' }} />
+              <div className="absolute inset-0 rounded-full border border-primary/30 bg-foreground/5" />
+              <div className="absolute inset-2 rounded-full border border-secondary/40" />
+              <div className="absolute inset-1 animate-spin rounded-full border-2 border-transparent border-t-primary border-r-secondary" style={{ animationDuration: '2s' }} />
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.5em] text-cyan-300 animate-[fadeIn_0.6s_ease]">
-                Loading portfolio
+              <p className="text-xs font-semibold uppercase tracking-[0.5em] text-primary animate-[fadeIn_0.6s_ease]">
+                Initializing portfolio
               </p>
-              <p className="mt-2 text-sm text-slate-300 animate-[fadeIn_0.8s_ease_0.1s_both]">
-                Crafting a premium full-stack experience
+              <p className="mt-2 text-sm text-foreground/60 animate-[fadeIn_0.8s_ease_0.1s_both]">
+                Building a premium experience
               </p>
             </div>
             <div className="mt-6 w-48">
-              <div className="h-px overflow-hidden rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent">
+              <div className="h-px overflow-hidden rounded-full bg-gradient-to-r from-transparent via-foreground/20 to-transparent">
                 <div
-                  className="h-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-cyan-400 transition-all duration-300 ease-out"
+                  className="h-full bg-gradient-to-r from-primary via-secondary to-accent transition-all duration-300 ease-out"
                   style={{ width: `${loadingProgress}%` }}
                 />
               </div>
-              <p className="mt-2 text-xs text-slate-400">{Math.round(loadingProgress)}%</p>
+              <p className="mt-2 text-xs text-foreground/50">{Math.round(loadingProgress)}%</p>
             </div>
           </div>
         </div>
       )}
 
-      <aside className="fixed inset-y-0 left-0 z-50 hidden w-24 border-r border-white/8 bg-background/70 backdrop-blur-xl xl:flex">
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-24 border-r border-border bg-background/50 backdrop-blur-xl xl:flex">
         <div className="flex h-full w-full flex-col items-center justify-between px-4 py-6">
           <Link
             href="#home"
-            className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/6 text-sm font-semibold tracking-[0.3em] text-white"
+            className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-sm font-semibold tracking-[0.3em] text-foreground hover:bg-muted transition-colors"
           >
             PI
           </Link>
 
           <div className="flex flex-1 items-center py-8">
-            <div className="relative h-full w-px rounded-full bg-white/10">
+            <div className="relative h-full w-px rounded-full bg-border">
               <div
-                className="absolute left-0 top-0 w-px rounded-full bg-gradient-to-b from-cyan-400 via-sky-400 to-emerald-400"
+                className="absolute left-0 top-0 w-px rounded-full bg-gradient-to-b from-primary via-secondary to-accent"
                 style={{ height: `${scrollProgress}%` }}
               />
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 text-white/60">
-            <a href="https://github.com/iceiec" target="_blank" rel="noreferrer" aria-label="GitHub">
+          <div className="flex flex-col gap-4 text-foreground/60">
+            <a href="https://github.com/iceiec" target="_blank" rel="noreferrer" aria-label="GitHub" className="hover:text-primary transition-colors">
               <Github size={18} />
             </a>
             <a
@@ -614,6 +623,7 @@ export default function Portfolio() {
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
+              className="hover:text-primary transition-colors"
             >
               <Linkedin size={18} />
             </a>
@@ -625,27 +635,37 @@ export default function Portfolio() {
       </aside>
 
       <div className="xl:pl-24">
-        <header className="sticky top-0 z-40 border-b border-white/8 bg-background/70 backdrop-blur-xl">
+        <header className="sticky top-0 z-40 border-b border-border bg-background/50 backdrop-blur-xl">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
-            <Link href="#home" className="text-lg font-semibold tracking-tight text-white">
+            <Link href="#home" className="text-lg font-semibold tracking-tight text-foreground hover:text-primary transition-colors">
               Pierre Isaiah
             </Link>
 
-            <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1 lg:flex">
+            <nav className="hidden items-center gap-1 rounded-full border border-border bg-card p-1 lg:flex">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
                   className={`rounded-full px-4 py-2 text-sm transition ${
                     activeSection === item.id
-                      ? 'bg-white/12 text-white'
-                      : 'text-white/65 hover:bg-white/6 hover:text-white'
+                      ? 'bg-primary/15 text-primary font-medium'
+                      : 'text-foreground/60 hover:bg-muted hover:text-foreground'
                   }`}
                 >
                   {item.label}
                 </button>
               ))}
             </nav>
+
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card hover:bg-muted transition-colors text-foreground"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
+            )}
 
             <a
               href="/PierreIsaiahAguinaldo_Resume.pdf"
@@ -667,28 +687,28 @@ export default function Portfolio() {
             ref={heroRef}
             className="relative overflow-hidden px-6 pb-24 pt-20 sm:pt-24 lg:pb-32 lg:pt-28"
           >
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.14),transparent_32%),radial-gradient(circle_at_top_right,rgba(16,185,129,0.12),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_35%)]" />
-            <div className="hero-parallax absolute -right-24 top-8 h-72 w-72 rounded-full bg-cyan-400/15 blur-3xl" />
-            <div className="hero-parallax absolute left-[-5rem] top-48 h-96 w-96 rounded-full bg-emerald-400/10 blur-3xl" />
+            <div className="absolute inset-0 -z-10 opacity-dark:40 opacity-light:20 bg-[radial-gradient(circle_at_top_left,var(--tw-gradient-stops))] dark:from-primary/15 dark:via-background dark:to-background from-primary/8 via-background to-background" />
+            <div className="hero-parallax absolute -right-24 top-8 h-72 w-72 rounded-full bg-primary/15 dark:bg-primary/10 blur-3xl" />
+            <div className="hero-parallax absolute left-[-5rem] top-48 h-96 w-96 rounded-full bg-secondary/10 dark:bg-secondary/8 blur-3xl" />
 
             <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.12fr_0.88fr] lg:gap-12">
               <div>
-                <div className="hero-badge inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2 text-sm text-white/80">
-                  <Sparkles size={16} className="text-cyan-300" />
+                <div className="hero-badge inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground/80">
+                  <Sparkles size={16} className="text-primary" />
                   Full-stack developer
                 </div>
 
-                <h1 className="hero-heading mt-6 max-w-4xl text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
+                <h1 className="hero-heading mt-6 max-w-4xl text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
                   <span key={heroMessageIndex} className="inline-block animate-[fadeIn_0.5s_ease]">
                     {heroMessages[heroMessageIndex]}
                   </span>
                 </h1>
 
-                <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
+                <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-foreground/70 sm:text-xl">
                   An aspiring Full-Stack Developer with hands-on experience building web and mobile applications through academic and internship projects. 
                 </p>
 
-                <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
+                <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-foreground/70 sm:text-xl">
                   I enjoy creating responsive, scalable, and user-focused solutions while continuously expanding my knowledge of modern technologies and best development practices.
                 </p>
                   
@@ -696,26 +716,26 @@ export default function Portfolio() {
                 <div className="hero-cta mt-8 flex flex-col gap-4 sm:flex-row">
                   <button
                     onClick={() => scrollToSection('projects')}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-100"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold transition hover:bg-primary/90 shadow-lg hover:shadow-primary/25"
                   >
                     View selected work
                     <ArrowRight size={16} />
                   </button>
                   <button
                     onClick={() => scrollToSection('contact')}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-muted"
                   >
                     Start a conversation
                   </button>
                 </div>
 
-                <div className="mt-10 flex flex-wrap items-center gap-4 text-sm text-slate-300">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
-                    <MapPin size={14} className="text-cyan-300" />
+                <div className="mt-10 flex flex-wrap items-center gap-4 text-sm text-foreground/70">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
+                    <MapPin size={14} className="text-primary" />
                     Philippines
                   </span>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
-                    <Code2 size={14} className="text-emerald-300" />
+                  <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
+                    <Code2 size={14} className="text-secondary" />
                     Full-stack developer
                   </span>
                 </div>
@@ -724,19 +744,19 @@ export default function Portfolio() {
                   {stats.map((stat) => (
                     <div
                       key={stat.label}
-                      className="hero-stat rounded-3xl border border-white/10 bg-white/5 p-5 shadow-[0_20px_80px_rgba(2,6,23,0.28)]"
+                      className="hero-stat rounded-2xl border border-border bg-card p-5 shadow-lg dark:shadow-black/50 light:shadow-black/5 hover:border-primary/50 transition-all"
                     >
-                      <div className="text-3xl font-semibold text-white">{stat.value}</div>
-                      <p className="mt-2 text-sm leading-6 text-slate-300">{stat.label}</p>
+                      <div className="text-3xl font-semibold text-foreground">{stat.value}</div>
+                      <p className="mt-2 text-sm leading-6 text-foreground/60">{stat.label}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="relative mx-auto w-full max-w-md">
-                <div data-parallax="10" className="hero-parallax absolute inset-0 rounded-[2rem] bg-gradient-to-br from-cyan-400/20 via-sky-400/10 to-emerald-400/20 blur-3xl" />
-                <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/55 p-4 shadow-[0_30px_120px_rgba(15,23,42,0.45)] backdrop-blur-xl">
-                  <div data-parallax="6" className="relative h-[500px] overflow-hidden rounded-[1.5rem] border border-white/10">
+                <div data-parallax="10" className="hero-parallax absolute inset-0 rounded-[2rem] bg-gradient-to-br from-primary/20 dark:from-primary/15 via-secondary/10 dark:via-secondary/8 to-accent/20 dark:to-accent/15 blur-3xl" />
+                <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card/50 dark:bg-card/30 p-4 shadow-2xl dark:shadow-black/50 light:shadow-black/10 backdrop-blur-xl">
+                  <div data-parallax="6" className="relative h-[500px] overflow-hidden rounded-[1.5rem] border border-border">
                     <Image
                       src="/profile.png"
                       alt="Portrait of Pierre Isaiah Aguinaldo"
@@ -745,20 +765,20 @@ export default function Portfolio() {
                       className="object-cover"
                       style={{ objectPosition: 'center 18%' }}
                     />
-                    <div data-parallax="2" className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+                    <div data-parallax="2" className="absolute inset-0 bg-gradient-to-t dark:from-background via-background/30 dark:via-background/20 to-transparent from-card via-card/20" />
 
-                    <div data-parallax="4" className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-slate-950/60 px-3 py-2 text-xs font-medium text-cyan-100 backdrop-blur-md">
+                    <div data-parallax="4" className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-primary/30 dark:border-primary/20 bg-background/60 dark:bg-background/70 px-3 py-2 text-xs font-medium text-primary dark:text-primary/90 backdrop-blur-md">
                       Open to SWE and full-stack opportunities
                     </div>
 
                     <div data-parallax="3" className="absolute bottom-4 left-4 right-4 grid gap-3 sm:grid-cols-2">
-                      <div className="rounded-2xl border border-white/10 bg-slate-950/70 p-4 backdrop-blur-md">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/45">Focus</p>
-                        <p className="mt-2 text-sm font-medium text-white">Clean architecture, sharp UI, practical motion</p>
+                      <div className="rounded-2xl border border-border bg-background/70 dark:bg-background/60 p-4 backdrop-blur-md">
+                        <p className="text-xs uppercase tracking-[0.3em] text-foreground/50">Focus</p>
+                        <p className="mt-2 text-sm font-medium text-foreground">Clean architecture, sharp UI, practical motion</p>
                       </div>
-                      <div className="rounded-2xl border border-white/10 bg-slate-950/70 p-4 backdrop-blur-md">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/45">Goal</p>
-                        <p className="mt-2 text-sm font-medium text-white">Join a team building useful, modern products</p>
+                      <div className="rounded-2xl border border-border bg-background/70 dark:bg-background/60 p-4 backdrop-blur-md">
+                        <p className="text-xs uppercase tracking-[0.3em] text-foreground/50">Goal</p>
+                        <p className="mt-2 text-sm font-medium text-foreground">Join a team building useful, modern products</p>
                       </div>
                     </div>
                   </div>
@@ -772,23 +792,23 @@ export default function Portfolio() {
             ref={focusRef}
             className="relative px-6 py-20 lg:py-28"
           >
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.06),transparent_45%)]" />
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,var(--color-primary)/0.06,transparent_45%)]" />
             <div className="mx-auto max-w-7xl">
               <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
                 <div data-parallax="8">
-                  <p className="focus-kicker text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">
+                  <p className="focus-kicker text-xs font-semibold uppercase tracking-[0.4em] text-primary">
                     Role focus
                   </p>
-                  <h2 className="focus-heading mt-4 max-w-2xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+                  <h2 className="focus-heading mt-4 max-w-2xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
                     Built to read like a candidate profile, not just a gallery of screens.
                   </h2>
-                  <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+                  <p className="mt-6 max-w-2xl text-lg leading-8 text-foreground/70">
                     This pinned section gives recruiters a quick, high-confidence summary of what I bring to a team: full-stack thinking, polished frontend work, and a collaborative delivery mindset.
                   </p>
-                  <p className="mt-8 max-w-xl text-sm leading-6 text-slate-400">
+                  <p className="mt-8 max-w-xl text-sm leading-6 text-foreground/50">
                     Use this as a quick read on how I approach delivery before reviewing the case studies below.
                   </p>
-                  <div className="focus-side-line mt-8 h-px w-full origin-left bg-gradient-to-r from-cyan-400 via-emerald-400 to-transparent" />
+                  <div className="focus-side-line mt-8 h-px w-full origin-left bg-gradient-to-r from-primary via-secondary to-transparent" />
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-3">
@@ -796,17 +816,17 @@ export default function Portfolio() {
                     <article
                       key={role.title}
                       data-focus-card
-                      className="group min-h-64 rounded-[1.75rem] border border-white/10 bg-white/5 p-6 shadow-[0_20px_80px_rgba(15,23,42,0.18)] backdrop-blur-sm"
+                      className="group min-h-64 rounded-[1.75rem] border border-border bg-card p-6 shadow-lg dark:shadow-black/50 light:shadow-black/5 hover:border-primary/50 transition-all"
                     >
                       <div className="flex items-center justify-between gap-4">
-                        <span className="text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300">
+                        <span className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">
                           0{index + 1}
                         </span>
-                        <div className="h-2 w-2 rounded-full bg-emerald-300" />
+                        <div className="h-2 w-2 rounded-full bg-secondary" />
                       </div>
-                      <h3 className="mt-5 text-2xl font-semibold text-white">{role.title}</h3>
-                      <p className="mt-4 leading-7 text-slate-300">{role.copy}</p>
-                      <div className="mt-6 rounded-full border border-white/10 bg-slate-950/40 px-4 py-2 text-sm text-white/70 transition group-hover:border-cyan-300/30 group-hover:text-white">
+                      <h3 className="mt-5 text-2xl font-semibold text-foreground">{role.title}</h3>
+                      <p className="mt-4 leading-7 text-foreground/70">{role.copy}</p>
+                      <div className="mt-6 rounded-full border border-border bg-muted/50 px-4 py-2 text-sm text-foreground/60 transition group-hover:border-primary/30 group-hover:text-foreground">
                         Scroll to see how this translates into the case studies below.
                       </div>
                     </article>
@@ -817,10 +837,10 @@ export default function Portfolio() {
           </section>
 
           <section id="experience" className="relative px-6 py-20 lg:py-28">
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.04),transparent_40%)]" />
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,var(--color-secondary)/0.04,transparent_40%)]" />
             <div className="mx-auto max-w-7xl">
-              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-300">Experience</p>
-              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-secondary">Experience</p>
+              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
                 Practical experience, academic grounding, and a portfolio built for real hiring conversations.
               </h2>
 
@@ -829,12 +849,12 @@ export default function Portfolio() {
                   <article
                     key={item.title}
                     data-reveal
-                    className="rounded-[1.75rem] border border-white/10 bg-white/5 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.2)]"
+                    className="rounded-[1.75rem] border border-border bg-card p-6 shadow-lg dark:shadow-black/50 light:shadow-black/5 hover:border-secondary/50 transition-all"
                   >
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300">{item.year}</p>
-                    <h3 className="mt-4 text-2xl font-semibold text-white">{item.title}</h3>
-                    <p className="mt-2 text-sm font-medium text-slate-200">{item.org}</p>
-                    <p className="mt-4 leading-7 text-slate-300">{item.copy}</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">{item.year}</p>
+                    <h3 className="mt-4 text-2xl font-semibold text-foreground">{item.title}</h3>
+                    <p className="mt-2 text-sm font-medium text-foreground/70">{item.org}</p>
+                    <p className="mt-4 leading-7 text-foreground/70">{item.copy}</p>
                   </article>
                 ))}
               </div>
@@ -842,10 +862,10 @@ export default function Portfolio() {
           </section>
 
           <section id="projects" className="relative px-6 py-20 lg:py-28">
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.05),transparent_50%)]" />
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_left,var(--color-primary)/0.05,transparent_50%)]" />
             <div className="mx-auto max-w-7xl">
-              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">Case studies</p>
-              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-primary">Case studies</p>
+              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
                 Projects presented with the same care I would bring to a real product review.
               </h2>
 
@@ -854,7 +874,7 @@ export default function Portfolio() {
                   <article
                     key={project.title}
                     data-project
-                    className={`group overflow-hidden rounded-[1.9rem] border border-white/10 bg-white/5 shadow-[0_28px_100px_rgba(15,23,42,0.3)] transition duration-300 hover:-translate-y-1 hover:border-white/20 ${
+                    className={`group overflow-hidden rounded-[1.9rem] border border-border bg-card shadow-lg dark:shadow-black/50 light:shadow-black/5 transition duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-xl dark:hover:shadow-primary/10 light:hover:shadow-primary/20 ${
                       project.title === 'Tomb Navigation & Contract Management' ? 'cursor-pointer' : ''
                     }`}
                     onClick={project.title === 'Tomb Navigation & Contract Management' ? openTombProject : undefined}
@@ -866,23 +886,23 @@ export default function Portfolio() {
                         fill
                         className="object-cover transition duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                      <div className="absolute left-4 top-4 rounded-full border border-white/10 bg-slate-950/65 px-3 py-2 text-xs font-medium text-white/80 backdrop-blur-md">
+                      <div className="absolute inset-0 bg-gradient-to-t dark:from-background dark:via-background/20 from-card via-card/20 to-transparent" />
+                      <div className="absolute left-4 top-4 rounded-full border border-border bg-background/65 dark:bg-background/70 px-3 py-2 text-xs font-medium text-foreground/80 backdrop-blur-md">
                         {project.category}
                       </div>
                     </div>
 
                     <div className="p-6">
-                      <h3 className="text-2xl font-semibold text-white transition group-hover:text-cyan-100">
+                      <h3 className="text-2xl font-semibold text-foreground transition group-hover:text-primary">
                         {project.title}
                       </h3>
-                      <p className="mt-4 leading-7 text-slate-300">{project.description}</p>
+                      <p className="mt-4 leading-7 text-foreground/70">{project.description}</p>
 
                       <div className="mt-5 flex flex-wrap gap-2">
                         {project.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="rounded-full border border-white/10 bg-slate-950/60 px-3 py-1 text-xs font-medium text-slate-200"
+                            className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-foreground/70 hover:border-primary/50 transition-colors"
                           >
                             {tag}
                           </span>
@@ -894,7 +914,7 @@ export default function Portfolio() {
                           href={project.link}
                           target="_blank"
                           rel="noreferrer"
-                          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-100 transition hover:text-white"
+                          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:text-primary/80"
                         >
                           Open live project
                           <ExternalLink size={16} />
@@ -909,28 +929,28 @@ export default function Portfolio() {
 
           {openProject === 'tomb' && (
             <div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 py-8 backdrop-blur-sm"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/80 px-4 py-8 backdrop-blur-sm"
               onClick={closeProject}
             >
               <div
-                className="relative max-h-[92vh] w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-white/10 bg-slate-950 p-6 shadow-[0_35px_120px_rgba(0,0,0,0.45)] sm:p-8"
+                className="relative max-h-[92vh] w-full max-w-6xl overflow-y-auto rounded-[2rem] border border-border bg-card p-6 shadow-2xl dark:shadow-black/50 light:shadow-black/10 sm:p-8"
                 onClick={(event) => event.stopPropagation()}
               >
                 <button
                   type="button"
                   onClick={closeProject}
-                  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10"
+                  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-muted hover:bg-muted/80 text-foreground transition"
                   aria-label="Close project modal"
                 >
                   ×
                 </button>
 
                 <div className="max-w-3xl pr-12">
-                  <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">Tomb Navigation & Contract Management</p>
-                  <h3 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
+                  <p className="text-xs font-semibold uppercase tracking-[0.4em] text-primary">Tomb Navigation & Contract Management</p>
+                  <h3 className="mt-4 text-3xl font-semibold text-foreground sm:text-4xl">
                     Mobile case study with guided navigation and contract management workflows.
                   </h3>
-                  <p className="mt-5 text-base leading-7 text-slate-300">
+                  <p className="mt-5 text-base leading-7 text-foreground/70">
                     A Flutter mobile app built to help users navigate cemetery spaces and manage contracts with clearer structure, faster access, and a more practical mobile experience. 
                   </p>
                 </div>
@@ -939,7 +959,7 @@ export default function Portfolio() {
                   {tombMobileScreens.map((screen, index) => (
                     <div
                       key={screen}
-                      className="relative aspect-[9/16] overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5"
+                      className="relative aspect-[9/16] overflow-hidden rounded-[1.5rem] border border-border bg-muted"
                     >
                       <Image
                         src={screen}
@@ -953,7 +973,7 @@ export default function Portfolio() {
 
                 <div className="mt-8 flex flex-wrap gap-2">
                   {['Flutter', 'Firebase', 'AI Integration', 'Maps API', 'Mobile UX'].map((tag) => (
-                    <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-200">
+                    <span key={tag} className="rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-foreground/70">
                       {tag}
                     </span>
                   ))}
@@ -963,10 +983,10 @@ export default function Portfolio() {
           )}
 
           <section id="skills" className="relative px-6 py-20 lg:py-28">
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05),transparent_45%)]" />
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,var(--color-secondary)/0.05,transparent_45%)]" />
             <div className="mx-auto max-w-7xl">
-              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-300">Skills</p>
-              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <p data-parallax="7" className="text-xs font-semibold uppercase tracking-[0.4em] text-secondary">Skills</p>
+              <h2 data-parallax="6" className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
                 A focused stack that supports modern full-stack and mobile delivery.
               </h2>
 
@@ -978,20 +998,20 @@ export default function Portfolio() {
                     <article
                       key={group.title}
                       data-reveal
-                      className="rounded-[1.75rem] border border-white/10 bg-white/5 p-6"
+                      className="rounded-[1.75rem] border border-border bg-card p-6 shadow-lg dark:shadow-black/50 light:shadow-black/5 hover:border-secondary/50 transition-all"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/8 text-cyan-200">
+                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-muted/50 text-primary">
                           <Icon size={20} />
                         </div>
-                        <h3 className="text-xl font-semibold text-white">{group.title}</h3>
+                        <h3 className="text-xl font-semibold text-foreground">{group.title}</h3>
                       </div>
 
                       <div className="mt-6 space-y-3">
                         {group.items.map((item) => (
                           <div
                             key={item}
-                            className="group relative flex items-center justify-between rounded-2xl border border-white/8 bg-slate-950/45 px-4 py-3 text-sm text-slate-200 transition-transform hover:translate-x-1 hover:scale-[1.01] hover:bg-white/6"
+                            className="group relative flex items-center justify-between rounded-2xl border border-border bg-muted/30 px-4 py-3 text-sm text-foreground/70 transition-transform hover:translate-x-1 hover:scale-[1.01] hover:bg-muted/60 hover:text-foreground"
                           >
                             <div className="flex items-center gap-3">
                               <span className="flex items-center justify-center">{getSkillIcon(item)}</span>
@@ -999,11 +1019,11 @@ export default function Portfolio() {
                             </div>
 
                             <div className="flex items-center gap-2">
-                              <span className="h-2 w-2 rounded-full bg-cyan-300 transition-transform group-hover:scale-110" />
+                              <span className="h-2 w-2 rounded-full bg-primary transition-transform group-hover:scale-110" />
                               <ArrowRight size={14} className="opacity-0 transition-opacity group-hover:opacity-100" />
                             </div>
 
-                            <div className="pointer-events-none absolute -top-12 left-4 z-50 hidden w-max rounded-md bg-slate-900/90 px-3 py-1 text-xs text-white shadow transition-all group-hover:block group-hover:opacity-100">
+                            <div className="pointer-events-none absolute -top-12 left-4 z-50 hidden w-max rounded-md bg-background/90 dark:bg-background/95 px-3 py-1 text-xs text-foreground shadow transition-all group-hover:block group-hover:opacity-100">
                               {skillDescriptions[item] ?? ''}
                             </div>
                           </div>
@@ -1017,55 +1037,55 @@ export default function Portfolio() {
           </section>
 
           <section id="contact" className="relative px-6 py-20 lg:py-28">
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_right,rgba(56,189,248,0.06),transparent_45%)]" />
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_right,var(--color-primary)/0.06,transparent_45%)]" />
             <div className="mx-auto max-w-5xl">
-              <div data-parallax="8" className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/8 via-white/5 to-cyan-400/8 p-8 shadow-[0_30px_120px_rgba(15,23,42,0.35)] sm:p-10 lg:p-12">
-                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-cyan-300">Contact</p>
-                <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                  Let’s talk about full-time SWE opportunities, internships, or a product idea worth building.
+              <div data-parallax="8" className="rounded-[2rem] border border-border bg-gradient-to-br dark:from-card dark:via-card/80 light:from-card light:via-background to-primary/10 p-8 shadow-xl dark:shadow-black/50 light:shadow-black/10 sm:p-10 lg:p-12">
+                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-primary">Contact</p>
+                <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                  Let's talk about full-time SWE opportunities, internships, or a product idea worth building.
                 </h2>
-                <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-                  I’m looking for a team where I can contribute, learn fast, and keep building polished experiences that feel credible from day one.
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-foreground/70">
+                  I'm looking for a team where I can contribute, learn fast, and keep building polished experiences that feel credible from day one.
                 </p>
 
                 <div className="mt-10 grid gap-4 md:grid-cols-3">
                   <a
                     href="mailto:isaiah.aguinaldo2@gmail.com"
-                    className="rounded-[1.5rem] border border-white/10 bg-slate-950/45 p-5 transition hover:border-cyan-300/30 hover:bg-slate-950/60"
+                    className="rounded-[1.5rem] border border-border bg-muted/50 p-5 transition hover:border-primary/50 hover:bg-muted/80 hover:shadow-lg"
                   >
-                    <Mail className="text-cyan-200" size={28} />
-                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-white/45">Email</p>
-                    <p className="mt-2 text-sm font-medium text-white">isaiah.aguinaldo2@gmail.com</p>
+                    <Mail className="text-primary" size={28} />
+                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-foreground/50">Email</p>
+                    <p className="mt-2 text-sm font-medium text-foreground">isaiah.aguinaldo2@gmail.com</p>
                   </a>
 
                   <a
                     href="https://linkedin.com/in/isaiahaguinaldo"
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-[1.5rem] border border-white/10 bg-slate-950/45 p-5 transition hover:border-cyan-300/30 hover:bg-slate-950/60"
+                    className="rounded-[1.5rem] border border-border bg-muted/50 p-5 transition hover:border-primary/50 hover:bg-muted/80 hover:shadow-lg"
                   >
-                    <Linkedin className="text-cyan-200" size={28} />
-                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-white/45">LinkedIn</p>
-                    <p className="mt-2 text-sm font-medium text-white">Isaiah Aguinaldo</p>
+                    <Linkedin className="text-primary" size={28} />
+                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-foreground/50">LinkedIn</p>
+                    <p className="mt-2 text-sm font-medium text-foreground">Isaiah Aguinaldo</p>
                   </a>
 
                   <a
                     href="https://github.com/iceiec"
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-[1.5rem] border border-white/10 bg-slate-950/45 p-5 transition hover:border-cyan-300/30 hover:bg-slate-950/60"
+                    className="rounded-[1.5rem] border border-border bg-muted/50 p-5 transition hover:border-primary/50 hover:bg-muted/80 hover:shadow-lg"
                   >
-                    <Github className="text-cyan-200" size={28} />
-                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-white/45">GitHub</p>
-                    <p className="mt-2 text-sm font-medium text-white">View my repositories</p>
+                    <Github className="text-primary" size={28} />
+                    <p className="mt-4 text-sm uppercase tracking-[0.3em] text-foreground/50">GitHub</p>
+                    <p className="mt-2 text-sm font-medium text-foreground">View my repositories</p>
                   </a>
                 </div>
 
-                <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-sm text-slate-400">Available for internships, junior SWE roles, and freelance collaborations.</p>
+                <div className="mt-8 flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm text-foreground/60">Available for internships, junior SWE roles, and freelance collaborations.</p>
                   <button
                     onClick={() => scrollToSection('home')}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-100"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-3 text-sm font-semibold transition hover:bg-primary/90 shadow-lg hover:shadow-primary/25"
                   >
                     Back to top
                     <ArrowRight size={16} />
@@ -1075,8 +1095,8 @@ export default function Portfolio() {
             </div>
           </section>
 
-          <footer className="border-t border-white/8 px-6 py-8">
-            <div className="mx-auto flex max-w-7xl flex-col gap-3 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+          <footer className="border-t border-border px-6 py-8">
+            <div className="mx-auto flex max-w-7xl flex-col gap-3 text-sm text-foreground/60 sm:flex-row sm:items-center sm:justify-between">
               <p>© {new Date().getFullYear()} Pierre Isaiah Aguinaldo. All rights reserved.</p>
               <p>Designed with React, Next.js, and GSAP.</p>
             </div>
