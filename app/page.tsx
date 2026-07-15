@@ -23,7 +23,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const navItems = [
   { id: 'home', label: 'Home' },
-  { id: 'focus', label: 'Focus' },
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
@@ -44,23 +43,7 @@ const stats = [
   
 ];
 
-const roleSummaries = [
-  {
-    title: 'Full-stack delivery',
-    copy:
-      'I start by reviewing the system documentation and constraints, then move through the frontend, backend, and database so the build stays aligned end to end.',
-  },
-  {
-    title: 'Frontend systems',
-    copy:
-      'I design responsive, professional interfaces that are easy to navigate, consistent across devices, and polished enough for real users.',
-  },
-  {
-    title: 'Collaboration mindset',
-    copy:
-      'I communicate clearly, iterate with intention, and keep work organized so teams can review, ship, and maintain it with confidence.',
-  },
-] as const;
+
 
 const timeline = [
   {
@@ -310,7 +293,6 @@ export default function Portfolio() {
   const { theme, setTheme } = useTheme();
   const rootRef = useRef<HTMLDivElement | null>(null);
   const heroRef = useRef<HTMLElement | null>(null);
-  const focusRef = useRef<HTMLElement | null>(null);
   const [activeSection, setActiveSection] = useState<SectionId>('home');
   const [scrollProgress, setScrollProgress] = useState(0);
   const [openProject, setOpenProject] = useState<string | null>(null);
@@ -705,11 +687,11 @@ export default function Portfolio() {
                 </h1>
 
                 <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-foreground/70 sm:text-xl">
-                  An aspiring Full-Stack Developer with hands-on experience building web and mobile applications through academic and internship projects. 
+                  Full-Stack Developer focused on building production-grade applications with clean architecture, polished UX, and seamless performance. I transform business requirements into robust web and mobile solutions.
                 </p>
 
-                <p className="hero-copy mt-6 max-w-2xl text-lg leading-8 text-foreground/70 sm:text-xl">
-                  I enjoy creating responsive, scalable, and user-focused solutions while continuously expanding my knowledge of modern technologies and best development practices.
+                <p className="hero-copy mt-4 max-w-2xl text-base leading-7 text-foreground/60">
+                  React.js, Next.js, Node.js, TypeScript, Supabase, Firebase — built 6+ projects from concept to deployment.
                 </p>
                   
 
@@ -782,55 +764,6 @@ export default function Portfolio() {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section
-            id="focus"
-            ref={focusRef}
-            className="relative px-6 py-20 lg:py-28"
-          >
-            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,var(--color-primary)/0.06,transparent_45%)]" />
-            <div className="mx-auto max-w-7xl">
-              <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
-                <div data-parallax="8">
-                  <p className="focus-kicker text-xs font-semibold uppercase tracking-[0.4em] text-primary">
-                    Role focus
-                  </p>
-                  <h2 className="focus-heading mt-4 max-w-2xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                    Built to read like a candidate profile, not just a gallery of screens.
-                  </h2>
-                  <p className="mt-6 max-w-2xl text-lg leading-8 text-foreground/70">
-                    This pinned section gives recruiters a quick, high-confidence summary of what I bring to a team: full-stack thinking, polished frontend work, and a collaborative delivery mindset.
-                  </p>
-                  <p className="mt-8 max-w-xl text-sm leading-6 text-foreground/50">
-                    Use this as a quick read on how I approach delivery before reviewing the case studies below.
-                  </p>
-                  <div className="focus-side-line mt-8 h-px w-full origin-left bg-gradient-to-r from-primary via-secondary to-transparent" />
-                </div>
-
-                <div className="grid gap-4 md:grid-cols-3">
-                  {roleSummaries.map((role, index) => (
-                    <article
-                      key={role.title}
-                      data-focus-card
-                      className="group min-h-64 rounded-[1.75rem] border border-border bg-card p-6 shadow-lg dark:shadow-black/50 light:shadow-black/5 hover:border-primary/50 transition-all"
-                    >
-                      <div className="flex items-center justify-between gap-4">
-                        <span className="text-xs font-semibold uppercase tracking-[0.35em] text-primary">
-                          0{index + 1}
-                        </span>
-                        <div className="h-2 w-2 rounded-full bg-secondary" />
-                      </div>
-                      <h3 className="mt-5 text-2xl font-semibold text-foreground">{role.title}</h3>
-                      <p className="mt-4 leading-7 text-foreground/70">{role.copy}</p>
-                      <div className="mt-6 rounded-full border border-border bg-muted/50 px-4 py-2 text-sm text-foreground/60 transition group-hover:border-primary/30 group-hover:text-foreground">
-                        Scroll to see how this translates into the case studies below.
-                      </div>
-                    </article>
-                  ))}
                 </div>
               </div>
             </div>
